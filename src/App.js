@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Home from './components/Home'
+import Login from './components/Login'
+import Signup from './components/Signup'
 import './App.css';
 
 class App extends Component {
@@ -15,7 +18,21 @@ class App extends Component {
   componentDidMount() {
     this.loginStatus()
   }
-  
+
+  loginStatus = () => {
+    axios.get('http://localhost:3001/logged_in',
+    {withCredentials: true})
+
+    .then(resp => {
+      if (resp.data.logged_in) {
+        this.handleLogin(resp)
+      } else {
+        this.handleLogout()
+      }
+    })
+    .catch(error => console.log('api errors:', error))
+  }
+
   handleLogin = (data) => {
     this.setState({
       isLoggedIn: true,
@@ -30,29 +47,29 @@ class App extends Component {
     })
   }
 
-  loginStatus = () => {
-    axios.get('http:localhost:3001/logged_in',
-    {withCredentials: true})
-
-    .then(resp => {
-      if (resp.data.logged_in) {
-        this.handleLogin(resp)
-      } else {
-        this.handleLogout()
-      }
-    })
-    .catch(error => console.log('api errors:', error))
-  }
-
-
   render() {
     return (
       <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path='/' component={}/>
-            <Route exact path='/login' component={}/>
-            <Route exact path='/signup' component={}/>
+            <Route 
+              exact path='/'
+              render={props => (
+                <Home {...props} handleLogout={this.handleLogout} loggedInStatus={this.state.isLoggedIn}/>
+              )} 
+            />
+            <Route
+              exact path='/login'
+              render={props => (
+                <Login {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
+              )}
+            />
+            <Route
+              exact path='/signup' 
+              render={props => (
+                <Signup {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
+              )}  
+            />
           </Switch>
         </BrowserRouter>
       </div>

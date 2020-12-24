@@ -22,7 +22,44 @@ class Signup extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
+        const {username, email, password, password_confirmation} = this.state
+
+        let user = {
+            username: username,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+        }
+
+        axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
+        .then(resp => {
+            if (resp.data.status === 'created') {
+                this.props.handleLogin(resp.data)
+                this.redirect()
+            } else {
+                this.setState({
+                    errors: resp.data.errors
+                })
+            }
+        })
+        .catch(error => console.log('api errors:', error))
     };
+
+    redirect = () => {
+        this.props.history.push('/')
+    }
+
+    handleErrors = () => {
+        return (
+            <div>
+                <ul>
+                    {this.state.errors.map((error) => {
+                        return <li return key={error}>{error}</li>
+                    })}
+                </ul>
+            </div>
+        )
+    }
 
     render() {
         const {username, email, password, password_confirmation} = this.state
@@ -65,6 +102,10 @@ class Signup extends Component {
                 </button>
             
                 </form>
+
+                <div>
+                    { this.state.errors ? this.handleErrors() : null }
+                </div>
             </div>
         )
     }
