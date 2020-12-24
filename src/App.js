@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup'
-import './App.css';
+
 
 class App extends Component {
   constructor(props) {
