@@ -4,7 +4,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Navbar from './components/Navbar'
-
+import WineContainer from './containers/WineContainer'
+import { connect } from 'react-redux'
+import { getWines } from './actions/wineActions'
 
 class App extends Component {
   constructor(props) {
@@ -70,11 +72,26 @@ class App extends Component {
                 <Signup {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
               )}  
             />
+            <Route 
+              exact path='/wines'
+              render={props => (
+                <WineContainer {...props} wines={this.props.wines.wines}/>
+              )}
+            />
           </Switch>
         </BrowserRouter>
+
       </div>
     )
   }
 }
 
-export default App;
+const mapStateFromProps = (state) => ({ 
+  wines: state.wines,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getWines: () => dispatch(getWines()),
+})
+
+export default connect(mapStateFromProps, mapDispatchToProps)(App);

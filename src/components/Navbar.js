@@ -14,7 +14,8 @@ const Navbar = (props) => {
 
     return (
         <div>
-            <Link to='/'>Home</Link>  
+            <Link to='/'>Home</Link>
+            <Link to='/wines'>Wines</Link>  
             {
                 props.loggedInStatus ? 
                 <Link to='/logout' onClick={handleClick}>Log Out</Link> :

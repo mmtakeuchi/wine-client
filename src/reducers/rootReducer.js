@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import winesReducer from './actions/winesReducer'
-import originsReducer from './actions/originsReducer'
-import varietalsReducer from './actions/varietalsReducer'
+import winesReducer from './winesReducer'
+import originsReducer from './originsReducer'
+import varietalsReducer from './varietalsReducer'
 
 const rootReducer = combineReducers ({
     wines: winesReducer,
