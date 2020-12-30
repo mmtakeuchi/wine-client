@@ -4,9 +4,9 @@ import originsReducer from './originsReducer'
 import varietalsReducer from './varietalsReducer'
 
 const rootReducer = combineReducers ({
-    wines: winesReducer,
-    origins: originsReducer,
-    varietals: varietalsReducer
+    winesReducer,
+    originsReducer,
+    varietalsReducer
 })
 
 export default rootReducer;

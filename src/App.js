@@ -50,6 +50,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.user)
     return (
       <div>
         <BrowserRouter>
@@ -75,7 +76,7 @@ class App extends Component {
             <Route 
               exact path='/wines'
               render={props => (
-                <WineContainer {...props} wines={this.props.wines.wines}/>
+                <WineContainer {...props} loggedInStatus={this.state.isLoggedIn}/>
               )}
             />
           </Switch>
