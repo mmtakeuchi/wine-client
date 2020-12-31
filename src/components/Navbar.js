@@ -1,31 +1,41 @@
-import axios from 'axios';
-import React from 'react';
-import { Link } from 'react-router-dom'
+import axios from "axios";
+import React from "react";
+import "./Navbar.css";
+import { Link, useHistory } from "react-router-dom";
 
 const Navbar = (props) => {
-    const handleClick = () => {
-        axios.delete('http://localhost:3001/logout', {withCredentials: true})
-        .then (resp => {
-            props.handleLogout()
-            props.history.push('/')
-        })
-        .catch(error => console.log(error))
-    }
+  const history = useHistory();
+  const handleClick = () => {
+    axios
+      .post("http://localhost:3001/logout", { withCredentials: true })
+      .then((resp) => {
+        props.handleLogout();
+        history.push("/");
+      })
+      .catch((error) => console.log(error));
+  };
 
-    return (
-        <div>
-            <Link to='/'>Home</Link>
-            <Link to='/wines'>Wines</Link>  
-            {
-                props.loggedInStatus ? 
-                <Link to='/logout' onClick={handleClick}>Log Out</Link> :
-                <>
-                    <Link to='/login'>Log In</Link>
-                    <Link to='/signup'>Sign Up</Link> 
-                </>  
-            }  
-        </div>
-    )
-}
+  return (
+    <div className="nav">
+      <Link to="/" className="home">
+        Home
+      </Link>
 
-export default Navbar
+      {props.isLoggedIn ? (
+        <>
+          <Link to="/logout" onClick={handleClick}>
+            Log Out
+          </Link>
+          <Link to="/wines">Wines</Link>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Log In</Link>
+          <Link to="/signup">Sign Up</Link>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Navbar;

@@ -1,0 +1,24 @@
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+
+.nav a {
+  float: right;
+  display: block;
+  color: #0b68f3;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  background: #ddd;
+  color: black;
+}
+
+.nav .home {
+  float: left;
+}
