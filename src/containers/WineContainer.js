@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Switch, Route, Link } from "react-router-dom";
 import WineForm from "../components/WineForm";
 import { connect } from "react-redux";
 import { getWines } from "../actions/wineActions";
@@ -10,10 +11,19 @@ class WineContainer extends Component {
 
   render() {
     console.log(this);
-    if (this.props.loggedInStatus) {
+    if (this.props.isLoggedIn) {
       return (
         <div>
-          <WineForm />
+          <Link to="/wines/new">Add Wine</Link>
+          {/* if ({this.props.wines.length > 0}){" "}
+          {<div>{this.props.wines[0].brand}</div>} */}
+          <Switch>
+            <Route
+              exact
+              path="/wines/new"
+              render={(props) => <WineForm {...props} />}
+            />
+          </Switch>
         </div>
       );
     }

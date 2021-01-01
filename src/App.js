@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import WineContainer from "./containers/WineContainer";
+import WineForm from "./components/WineForm";
 
 class App extends Component {
   constructor(props) {
@@ -89,6 +91,18 @@ class App extends Component {
                   isLoggedIn={this.state.isLoggedIn}
                 />
               )}
+            />
+            <Route
+              exact
+              path="/wines"
+              render={(props) => (
+                <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+              )}
+            />
+            <Route
+              exact
+              path="/wines/new"
+              render={(props) => <WineForm {...props} />}
             />
           </Switch>
         </BrowserRouter>

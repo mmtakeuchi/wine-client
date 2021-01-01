@@ -1,13 +1,24 @@
-const winesReducer = (state = {wines: []}, action) => {
-    switch(action.type) {
-        case 'GET_WINES':
-            return {
-                ...state, 
-                wines: action.wines}
+const wines = {
+  wines: [],
+};
 
-        default: 
-            return state
-    }
-}
+const winesReducer = (state = wines, action) => {
+  switch (action.type) {
+    case "GET_WINES":
+      console.log(action.wines);
+      return {
+        ...state,
+        wines: action.wines,
+      };
+    case "Add_WINE":
+      return {
+        ...state,
+        wines: [...state.wines, action.wine],
+      };
+
+    default:
+      return state;
+  }
+};
 
 export default winesReducer;
