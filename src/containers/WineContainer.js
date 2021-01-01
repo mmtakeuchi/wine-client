@@ -3,6 +3,8 @@ import { Switch, Route, Link } from "react-router-dom";
 import WineForm from "../components/WineForm";
 import { connect } from "react-redux";
 import { getWines } from "../actions/wineActions";
+import OriginList from "../components/OriginList";
+import VarietalList from "../components/VarietalList";
 
 class WineContainer extends Component {
   componentDidMount() {
@@ -14,6 +16,8 @@ class WineContainer extends Component {
     if (this.props.isLoggedIn) {
       return (
         <div>
+          <OriginList />
+          <VarietalList />
           <Link to="/wines/new">Add Wine</Link>
           {/* if ({this.props.wines.length > 0}){" "}
           {<div>{this.props.wines[0].brand}</div>} */}
@@ -37,7 +41,7 @@ class WineContainer extends Component {
   }
 }
 
-const mapStateFromProps = (state) => ({
+const mapStateToProps = (state) => ({
   wines: state.wines,
 });
 
@@ -45,4 +49,4 @@ const mapDispatchToProps = (dispatch) => ({
   getWines: () => dispatch(getWines()),
 });
 
-export default connect(mapStateFromProps, mapDispatchToProps)(WineContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(WineContainer);

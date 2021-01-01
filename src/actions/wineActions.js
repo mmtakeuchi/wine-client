@@ -28,29 +28,3 @@ export const addWine = ({ brand, nose, taste }) => {
       });
   };
 };
-
-// export const addShoe = (shoe) => {
-//     return (dispatch) => {
-//         const strongParams = {
-//             shoe: {
-//                name: shoe.name,
-//                picture: shoe.picture,
-//                color: shoe.color,
-//                size: shoe.size,
-//                condition: shoe.condition,
-//                brand_id: shoe.brand_id
-//             }
-//         }
-//         fetch(shoeURL, {
-//             method: "POST",
-//             headers: {
-//                 "Accepts": "application/json",
-//                 "Content-Type": "application/json"
-//             },
-//             body: JSON.stringify(strongParams)
-//         })
-//         .then(resp => resp.json())
-//         .then(shoe => dispatch({type: 'ADD_SHOE', shoe}))
-//         .catch(errors => console.log(errors))
-//     }
-// }
