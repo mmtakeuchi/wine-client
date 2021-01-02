@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -53,59 +53,57 @@ class App extends Component {
     console.log(this.state);
     return (
       <div className="main">
-        <BrowserRouter>
-          <Navbar
-            handleLogout={this.handleLogout}
-            isLoggedIn={this.state.isLoggedIn}
+        <Navbar
+          handleLogout={this.handleLogout}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Home
+                {...props}
+                handleLogout={this.handleLogout}
+                isLoggedIn={this.state.isLoggedIn}
+              />
+            )}
           />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Home
-                  {...props}
-                  handleLogout={this.handleLogout}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/login"
-              render={(props) => (
-                <Login
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={(props) => (
-                <Signup
-                  {...props}
-                  handleLogin={this.handleLogin}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/wines"
-              render={(props) => (
-                <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
-              )}
-            />
-            <Route
-              exact
-              path="/wines/new"
-              render={(props) => <WineForm {...props} />}
-            />
-          </Switch>
-        </BrowserRouter>
+          <Route
+            exact
+            path="/login"
+            render={(props) => (
+              <Login
+                {...props}
+                handleLogin={this.handleLogin}
+                isLoggedIn={this.state.isLoggedIn}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={(props) => (
+              <Signup
+                {...props}
+                handleLogin={this.handleLogin}
+                isLoggedIn={this.state.isLoggedIn}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/wines"
+            render={(props) => (
+              <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+            )}
+          />
+          <Route
+            exact
+            path="/wines/new"
+            render={(props) => <WineForm {...props} />}
+          />
+        </Switch>
       </div>
     );
   }

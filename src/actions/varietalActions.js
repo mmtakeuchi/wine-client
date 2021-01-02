@@ -14,3 +14,16 @@ export const getVarietals = () => {
       });
   };
 };
+
+export const getVarietal = (id) => {
+  return (dispatch) => {
+    axios
+      .get(baseURL)
+      .then((resp) => {
+        dispatch({ type: "GET_VARIETAL", varietal: resp.data });
+      })
+      .catch((errors) => {
+        return Promise.reject(errors);
+      });
+  };
+};

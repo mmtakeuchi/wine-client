@@ -17,23 +17,37 @@ const Navbar = (props) => {
 
   return (
     <div className="nav">
-      <Link to="/" className="home">
-        Home
-      </Link>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/" className="home">
+              Home
+            </Link>
+          </li>
 
-      {props.isLoggedIn ? (
-        <>
-          <Link to="/logout" onClick={handleClick}>
-            Log Out
-          </Link>
-          <Link to="/wines">Wines</Link>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Log In</Link>
-          <Link to="/signup">Sign Up</Link>
-        </>
-      )}
+          {props.isLoggedIn ? (
+            <>
+              <li>
+                <Link to="/wines">Wines</Link>
+              </li>
+              <li>
+                <Link to="/logout" onClick={handleClick}>
+                  Log Out
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Log In</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
     </div>
   );
 };

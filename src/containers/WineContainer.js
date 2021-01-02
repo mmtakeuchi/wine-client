@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getWines } from "../actions/wineActions";
 import OriginList from "../components/OriginList";
 import VarietalList from "../components/VarietalList";
+import Varietal from "../components/Varietal";
 
 class WineContainer extends Component {
   componentDidMount() {
@@ -26,6 +27,11 @@ class WineContainer extends Component {
               exact
               path="/wines/new"
               render={(props) => <WineForm {...props} />}
+            />
+            <Route
+              exact
+              path="/varietals/:id"
+              render={(props) => <Varietal {...props} />}
             />
           </Switch>
         </div>

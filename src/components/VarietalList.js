@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
+import Varietal from "./Varietal";
 
 export class VarietalList extends Component {
   componentDidMount = () => {
@@ -8,12 +10,22 @@ export class VarietalList extends Component {
   };
 
   render() {
-    const varietals = this.props.varietals.varietals;
-    console.log(this.props.varietals.varietals[0]);
+    const { varietals } = this.props.varietals;
+
+    const renderVarietal = (varietals) => {
+      return varietals.map((varietal) => (
+        <li key={varietal.id}>
+          <Link to={`/varietals/${varietal.id}`}>
+            <Varietal varietal={varietal} />
+          </Link>
+        </li>
+      ));
+    };
+
     return (
       <div>
         Varietal List
-        <div>{varietals[0].name.toUpperCase()}</div>
+        <ul>{renderVarietal(varietals)}</ul>
       </div>
     );
   }
