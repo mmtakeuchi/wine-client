@@ -15,12 +15,14 @@ export const getVarietals = () => {
   };
 };
 
-export const getVarietal = (id) => {
+export const findVarietal = (varietalId) => {
+  console.log(varietalId);
   return (dispatch) => {
     axios
-      .get(baseURL)
+      .get(`${baseURL}/${varietalId}`)
       .then((resp) => {
-        dispatch({ type: "GET_VARIETAL", varietal: resp.data });
+        console.log(resp);
+        dispatch({ type: "FIND_VARIETAL", varietal: resp.data });
       })
       .catch((errors) => {
         return Promise.reject(errors);

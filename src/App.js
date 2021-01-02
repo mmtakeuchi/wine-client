@@ -8,6 +8,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
 import WineForm from "./components/WineForm";
+import VarietalList from "./components/VarietalList";
+import Varietal from "./components/Varietal";
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +51,12 @@ class App extends Component {
     });
   };
 
+  renderWineContainer = () => {
+    if (this.state.isLoggedIn) {
+      return <WineContainer />;
+    }
+  };
+
   render() {
     console.log(this.state);
     return (
@@ -57,6 +65,7 @@ class App extends Component {
           handleLogout={this.handleLogout}
           isLoggedIn={this.state.isLoggedIn}
         />
+        <WineContainer isLoggedIn={this.state.isLoggedIn} />
         <Switch>
           <Route
             exact
@@ -90,18 +99,6 @@ class App extends Component {
                 isLoggedIn={this.state.isLoggedIn}
               />
             )}
-          />
-          <Route
-            exact
-            path="/wines"
-            render={(props) => (
-              <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
-            )}
-          />
-          <Route
-            exact
-            path="/wines/new"
-            render={(props) => <WineForm {...props} />}
           />
         </Switch>
       </div>

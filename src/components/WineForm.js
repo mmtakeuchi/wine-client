@@ -63,6 +63,7 @@ class WineForm extends React.Component {
             Add Wine
           </button>
         </form>
+        <button onClick={() => this.props.history.push("/")}>Home</button>
       </div>
     );
   }
