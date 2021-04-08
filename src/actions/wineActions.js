@@ -28,3 +28,16 @@ export const addWine = ({ brand, nose, taste, varietal_id, origin_id }) => {
       });
   };
 };
+
+export const getWine = (wineId) => {
+  return (dispatch) => {
+    axios
+      .get(`${baseURL}/${wineId}`)
+      .then((resp) => {
+        return dispatch({ type: "GET_WINE", wine: resp.data });
+      })
+      .catch((errors) => {
+        return Promise.reject(errors);
+      });
+  };
+};

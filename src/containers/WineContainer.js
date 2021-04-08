@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { getWines } from "../actions/wineActions";
 import WineList from "../components/WineList";
+import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
 import OriginList from "../components/OriginList";
 import VarietalContainer from "./VarietalContainer";
@@ -10,9 +11,9 @@ import VarietalContainer from "./VarietalContainer";
 // import Varietal from "../components/Varietal";
 
 class WineContainer extends Component {
-  componentDidMount() {
-    this.props.getWines();
-  }
+  // componentDidMount() {
+  //   this.props.getWines();
+  // }
 
   handleRedirect = () => {
     this.props.history.push("/");
@@ -25,16 +26,19 @@ class WineContainer extends Component {
         <div>
           <OriginList />
           <VarietalContainer />
+          {/* <WineList wines={this.props.wines} /> */}
 
           <Switch>
             <Route
               exact
               path="/wines"
               render={(props) => (
-                <WineList {...props} wines={this.props.wines} />
+                // <WineList {...props} wines={this.props.wines} />
+                <WineList />
               )}
             />
-            <Route path="/wines/new" component={WineForm} />
+            <Route exact path="/wines/new" component={WineForm} />
+            <Route path="/wines/:id" component={Wine} />
           </Switch>
         </div>
       );

@@ -65,8 +65,13 @@ class App extends Component {
           handleLogout={this.handleLogout}
           isLoggedIn={this.state.isLoggedIn}
         />
-        <WineContainer isLoggedIn={this.state.isLoggedIn} />
         <Switch>
+          <Route
+            path="/wines"
+            render={(props) => (
+              <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+            )}
+          />
           <Route
             exact
             path="/"

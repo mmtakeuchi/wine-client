@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import { addWine } from "../actions/wineActions";
-import OriginForm from "./OriginForm";
 
 class WineForm extends React.Component {
   componentDidMount = () => {
@@ -42,8 +41,6 @@ class WineForm extends React.Component {
   };
 
   render() {
-    const varietals = this.props.varietals.map((varietal) => varietal.name);
-    const origins = this.props.origins.map((origin) => origin.region);
     console.log(this);
     return (
       <div>
@@ -76,9 +73,9 @@ class WineForm extends React.Component {
             onChange={this.onChange}
           >
             <option>Varietal</option>
-            {varietals.map((varietal, i) => (
-              <option key={i} value={i}>
-                {varietal}
+            {this.props.varietals.map((varietal) => (
+              <option key={varietal.id} value={varietal.id}>
+                {varietal.name}
               </option>
             ))}
           </select>
@@ -89,9 +86,9 @@ class WineForm extends React.Component {
             onChange={this.onChange}
           >
             <option>Region</option>
-            {origins.map((origin, i) => (
-              <option key={i} value={i}>
-                {origin}
+            {this.props.origins.map((origin) => (
+              <option key={origin.id} value={origin.id}>
+                {origin.region}
               </option>
             ))}
           </select>
