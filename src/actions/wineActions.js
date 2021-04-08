@@ -41,3 +41,31 @@ export const getWine = (wineId) => {
       });
   };
 };
+
+export const editWine = ({ brand, nose, taste, varietal_id, origin_id }) => {
+  return (dispatch) => {
+    axios
+      .patch(baseURL, { brand, nose, taste, varietal_id, origin_id })
+      .then((resp) => {
+        console.log(resp.data);
+        return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const deleteWine = (wineId) => {
+  return (dispatch) => {
+    axios
+      .delete(`${baseURL}/${wineId}`)
+      .then((resp) => {
+        console.log(resp.data);
+        return dispatch({ type: "DELETE_WINE", deleteWine: resp.data });
+      })
+      .catch((errors) => {
+        return Promise.reject(errors);
+      });
+  };
+};

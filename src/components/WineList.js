@@ -7,6 +7,7 @@ export class WineList extends Component {
   componentDidMount = () => {
     this.props.getWines();
   };
+
   render() {
     console.log(this);
     return (

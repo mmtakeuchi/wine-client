@@ -5,6 +5,7 @@ import { getWines } from "../actions/wineActions";
 import WineList from "../components/WineList";
 import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
+import EditWine from "../components/EditWine";
 import OriginList from "../components/OriginList";
 import VarietalContainer from "./VarietalContainer";
 // import VarietalList from "../components/VarietalList";
@@ -29,16 +30,10 @@ class WineContainer extends Component {
           {/* <WineList wines={this.props.wines} /> */}
 
           <Switch>
-            <Route
-              exact
-              path="/wines"
-              render={(props) => (
-                // <WineList {...props} wines={this.props.wines} />
-                <WineList />
-              )}
-            />
             <Route exact path="/wines/new" component={WineForm} />
+            <Route path="/wines/:id/edit" component={EditWine} />
             <Route path="/wines/:id" component={Wine} />
+            <Route exact path="/wines" component={WineList} />
           </Switch>
         </div>
       );

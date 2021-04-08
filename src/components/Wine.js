@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getWine } from "../actions/wineActions";
+import { getWine, deleteWine } from "../actions/wineActions";
 
 const Wine = (props) => {
   const dispatch = useDispatch();
@@ -12,7 +12,13 @@ const Wine = (props) => {
     dispatch(getWine(wineId));
   }, []);
 
+  const handleDelete = (id) => {
+    dispatch(deleteWine(`${wines.id}`));
+    props.history.push("/wines");
+  };
+
   console.log(wines);
+  console.log(props);
   if (wines && wines.brand) {
     return (
       <React.Fragment>
@@ -21,6 +27,10 @@ const Wine = (props) => {
         <p>{wines.taste}</p>
         <p>{wines.varietal.name}</p>
         <p>{wines.origin.region}</p>
+        <button>
+          <Link to={`/wines/${wines.id}/edit`}>Edit Wine</Link>
+        </button>
+        <button onClick={handleDelete}>Delete Wine</button>
       </React.Fragment>
     );
   } else {

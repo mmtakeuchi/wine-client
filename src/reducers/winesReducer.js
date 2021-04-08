@@ -23,6 +23,24 @@ const winesReducer = (state = wines, action) => {
     case "GET_WINE":
       return { ...state, wines: action.wine };
 
+    case "EDIT_WINE":
+      console.log(action.updatedWine);
+      console.log(...state);
+      let otherWines = state.wines.filter(
+        (wine) => wine.id !== action.updatedWine.id
+      );
+      console.log(otherWines);
+      return { wines: [...otherWines, action.updatedWine] };
+
+    case "DELETE_WINE":
+      const filteredWine = state.wines.filter(
+        (wine) => wine.id !== action.deleteWine.id
+      );
+      return {
+        ...state,
+        wines: filteredWine,
+      };
+
     default:
       return state;
   }
