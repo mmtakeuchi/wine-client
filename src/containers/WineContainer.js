@@ -6,8 +6,8 @@ import WineList from "../components/WineList";
 import WineForm from "../components/WineForm";
 import OriginList from "../components/OriginList";
 import VarietalContainer from "./VarietalContainer";
-import VarietalList from "../components/VarietalList";
-import Varietal from "../components/Varietal";
+// import VarietalList from "../components/VarietalList";
+// import Varietal from "../components/Varietal";
 
 class WineContainer extends Component {
   componentDidMount() {
@@ -25,7 +25,7 @@ class WineContainer extends Component {
         <div>
           <OriginList />
           <VarietalContainer />
-          <button onClick={() => this.props.history.push("/")}>Home</button>
+
           <Switch>
             <Route
               exact
@@ -50,7 +50,7 @@ class WineContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  wines: state.wines,
+  wines: state.wines.wines,
 });
 
 const mapDispatchToProps = (dispatch) => ({

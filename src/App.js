@@ -7,9 +7,9 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
-import WineForm from "./components/WineForm";
-import VarietalList from "./components/VarietalList";
-import Varietal from "./components/Varietal";
+// import WineForm from "./components/WineForm";
+// import VarietalList from "./components/VarietalList";
+// import Varietal from "./components/Varietal";
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class App extends Component {
       .get("http://localhost:3001/logged_in", { withCredentials: true })
       .then((response) => {
         if (response.data.logged_in) {
-          this.handleLogin(response);
+          this.handleLogin(response.data);
         } else {
           this.handleLogout();
         }

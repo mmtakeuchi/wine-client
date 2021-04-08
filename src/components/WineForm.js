@@ -1,8 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getVarietals } from "../actions/varietalActions";
 import { addWine } from "../actions/wineActions";
+import OriginForm from "./OriginForm";
 
 class WineForm extends React.Component {
+  componentDidMount = () => {
+    this.props.getVarietals();
+  };
+
   state = {
     brand: "",
     nose: "",
@@ -11,7 +17,7 @@ class WineForm extends React.Component {
     varietal_id: "",
   };
 
-  onInputChange = (e) => {
+  onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -34,6 +40,7 @@ class WineForm extends React.Component {
   };
 
   render() {
+    const varietals = this.props.varietals.map((varietal) => varietal.name);
     console.log(this);
     return (
       <div>
@@ -43,22 +50,35 @@ class WineForm extends React.Component {
             type="text"
             name="brand"
             value={this.state.brand}
-            onChange={this.onInputChange}
+            onChange={this.onChange}
           />
           <input
             placeholder="nose"
             type="text"
             name="nose"
             value={this.state.nose}
-            onChange={this.onInputChange}
+            onChange={this.onChange}
           />
           <input
             placeholder="taste"
             type="text"
             name="taste"
             value={this.state.taste}
-            onChange={this.onInputChange}
+            onChange={this.onChange}
           />
+          <select
+            className="varietialSelect"
+            name="varietal_id"
+            value={this.state.varietal_id}
+            onChange={this.onChange}
+          >
+            {varietals.map((varietal, i) => (
+              <option key={i} value={i}>
+                {varietal}
+              </option>
+            ))}
+          </select>
+          <OriginForm />
           <button placeholder="submit" type="submit">
             Add Wine
           </button>
@@ -69,8 +89,12 @@ class WineForm extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  varietals: state.varietals.varietals,
+});
 const mapDispatchToProps = (dispatch) => ({
   addWine: (wine) => dispatch(addWine(wine)),
+  getVarietals: () => dispatch(getVarietals()),
 });
 
-export default connect(null, mapDispatchToProps)(WineForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WineForm);

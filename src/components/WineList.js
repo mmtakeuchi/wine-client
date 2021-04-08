@@ -10,7 +10,10 @@ export class WineList extends Component {
         <br />
         <Link to="/varietals">Varietals</Link>
         <br />
-        WineList
+        <ul>
+          {this.props.wines.length > 0 &&
+            this.props.wines.map((wine, i) => <li key={i}>{wine.brand}</li>)}
+        </ul>
       </div>
     );
   }

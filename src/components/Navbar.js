@@ -30,7 +30,7 @@ const Navbar = (props) => {
               <li>
                 <Link to="/wines">Wines</Link>
               </li>
-              <li>
+              <li className="auth">
                 <Link to="/logout" onClick={handleClick}>
                   Log Out
                 </Link>
@@ -38,10 +38,10 @@ const Navbar = (props) => {
             </>
           ) : (
             <>
-              <li>
+              <li className="auth">
                 <Link to="/login">Log In</Link>
               </li>
-              <li>
+              <li className="auth">
                 <Link to="/signup">Sign Up</Link>
               </li>
             </>

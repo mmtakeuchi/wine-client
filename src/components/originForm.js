@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-export class originForm extends Component {
+export class OriginForm extends Component {
   render() {
     return <div>Origin Form</div>;
   }
@@ -9,4 +9,4 @@ export class originForm extends Component {
 
 const mapDispatchToProps = {};
 
-export default connect(null, mapDispatchToProps)(originForm);
+export default connect(null, mapDispatchToProps)(OriginForm);
