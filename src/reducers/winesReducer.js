@@ -8,12 +8,16 @@ const winesReducer = (state = wines, action) => {
       console.log(action.wines);
       console.log(state);
       return {
+        ...state,
         wines: action.wines,
       };
 
     case "Add_WINE":
+      console.log(action.newWine);
+      console.log(state);
       return {
-        wines: [...state.wines, action.wine],
+        ...state,
+        wines: [...state.wines, action.newWine],
       };
 
     default:

@@ -15,10 +15,10 @@ export const getWines = () => {
   };
 };
 
-export const addWine = ({ brand, nose, taste, varietal_id }) => {
+export const addWine = ({ brand, nose, taste, varietal_id, origin_id }) => {
   return (dispatch) => {
     axios
-      .post(baseURL, { brand, nose, taste, varietal_id })
+      .post(baseURL, { brand, nose, taste, varietal_id, origin_id })
       .then((resp) => {
         console.log(resp);
         return dispatch({ type: "ADD_WINE", newWine: resp.data });

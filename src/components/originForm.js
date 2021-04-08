@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { getOrigins } from "../actions/originActions";
 
-export class OriginForm extends Component {
+class OriginForm extends Component {
+  componentDidMount = () => {
+    this.props.getOrigins();
+  };
+
+  state = {
+    origin_id: "",
+  };
+
   render() {
-    return <div>Origin Form</div>;
+    console.log(this.props.origins);
+    return (
+      <React.Fragment>
+        <select></select>
+      </React.Fragment>
+    );
   }
 }
 
-const mapDispatchToProps = {};
+const mapStateToProps = (state) => ({
+  origins: state.origins,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getOrigins: () => dispatch(getOrigins()),
+});
 
-export default connect(null, mapDispatchToProps)(OriginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OriginForm);
