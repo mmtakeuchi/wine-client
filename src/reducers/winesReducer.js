@@ -33,11 +33,13 @@ const winesReducer = (state = wines, action) => {
       return { wines: [...otherWines, action.updatedWine] };
 
     case "DELETE_WINE":
+      console.log(action.deleteWineId);
+      console.log(state.wines);
       const filteredWine = state.wines.filter(
-        (wine) => wine.id !== action.deleteWine.id
+        (wine) => wine.id !== parseInt(action.deleteWineId)
       );
+      console.log(filteredWine);
       return {
-        ...state,
         wines: filteredWine,
       };
 

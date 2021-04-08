@@ -61,8 +61,8 @@ export const deleteWine = (wineId) => {
     axios
       .delete(`${baseURL}/${wineId}`)
       .then((resp) => {
-        console.log(resp.data);
-        return dispatch({ type: "DELETE_WINE", deleteWine: resp.data });
+        console.log(resp);
+        return dispatch({ type: "DELETE_WINE", deleteWineId: wineId });
       })
       .catch((errors) => {
         return Promise.reject(errors);
