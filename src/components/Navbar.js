@@ -33,6 +33,9 @@ const Navbar = (props) => {
               <li>
                 <Link to="/varietals">Varietals</Link>
               </li>
+              <li>
+                <Link to="/origins">Regions</Link>
+              </li>
               <li className="auth">
                 <Link to="/logout" onClick={handleClick}>
                   Log Out

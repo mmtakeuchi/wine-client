@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
 import VarietalContainer from "./containers/VarietalContainer";
+import OriginContainer from "./containers/OriginContainer";
 // import WineForm from "./components/WineForm";
 // import VarietalList from "./components/VarietalList";
 // import Varietal from "./components/Varietal";
@@ -80,6 +81,12 @@ class App extends Component {
                 {...props}
                 isLoggedIn={this.state.isLoggedIn}
               />
+            )}
+          />
+          <Route
+            path="/origins"
+            render={(props) => (
+              <OriginContainer {...props} isLoggedIn={this.state.isLoggedIn} />
             )}
           />
           <Route
