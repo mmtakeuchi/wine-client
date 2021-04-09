@@ -26,7 +26,6 @@ class WineContainer extends Component {
       return (
         <div>
           <OriginList />
-          <VarietalContainer />
           {/* <WineList wines={this.props.wines} /> */}
 
           <Switch>

@@ -9,7 +9,9 @@ export class VarietalContainer extends Component {
   componentDidMount = () => {
     this.props.getVarietals();
   };
+
   render() {
+    console.log(this);
     return (
       <div>
         <Switch>

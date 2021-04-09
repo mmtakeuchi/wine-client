@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
+import VarietalContainer from "./containers/VarietalContainer";
 // import WineForm from "./components/WineForm";
 // import VarietalList from "./components/VarietalList";
 // import Varietal from "./components/Varietal";
@@ -70,6 +71,15 @@ class App extends Component {
             path="/wines"
             render={(props) => (
               <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+            )}
+          />
+          <Route
+            path="/varietals"
+            render={(props) => (
+              <VarietalContainer
+                {...props}
+                isLoggedIn={this.state.isLoggedIn}
+              />
             )}
           />
           <Route

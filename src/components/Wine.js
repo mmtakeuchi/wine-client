@@ -10,7 +10,7 @@ const Wine = (props) => {
 
   useEffect(() => {
     dispatch(getWine(wineId));
-  }, []);
+  }, [wines]);
 
   const handleDelete = (id) => {
     dispatch(deleteWine(`${wines.id}`));
