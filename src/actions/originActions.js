@@ -14,3 +14,16 @@ export const getOrigins = () => {
       });
   };
 };
+
+export const findOrigin = (originId) => {
+  return (dispatch) => {
+    axios
+      .get(`${baseURL}/${originId}`)
+      .then((resp) => {
+        dispatch({ type: "FIND_ORIGIN", origin: resp.data });
+      })
+      .catch((errors) => {
+        return Promise.reject(errors);
+      });
+  };
+};
