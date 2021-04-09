@@ -105,10 +105,10 @@ class EditWine extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  wine: state.wines.wines,
-  varietals: state.varietals.varietals,
-  origins: state.origins.origins,
+const mapStateToProps = ({ wines, varietals, origins }) => ({
+  wine: wines.wines,
+  varietals: varietals.varietals,
+  origins: origins.origins,
 });
 const mapDispatchToProps = (dispatch) => ({
   getWine: (id) => dispatch(getWine(id)),

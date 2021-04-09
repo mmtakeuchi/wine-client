@@ -7,9 +7,6 @@ import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
 import EditWine from "../components/EditWine";
 import OriginList from "../components/OriginList";
-import VarietalContainer from "./VarietalContainer";
-// import VarietalList from "../components/VarietalList";
-// import Varietal from "../components/Varietal";
 
 class WineContainer extends Component {
   // componentDidMount() {

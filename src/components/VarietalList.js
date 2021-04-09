@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
-import Varietal from "./Varietal";
 
 export class VarietalList extends Component {
   componentDidMount = () => {
@@ -21,12 +20,19 @@ export class VarietalList extends Component {
       ));
     };
 
+    if (varietals && varietals.length > 0) {
+      return (
+        <div>
+          <ul>{renderVarietal(varietals)}</ul>
+        </div>
+      );
+    }
+
     return (
-      <div>
-        Varietal List
-        <ul>{renderVarietal(varietals)}</ul>
-        <button onClick={() => this.props.history.push("/")}>Home</button>
-      </div>
+      <React.Fragment>
+        <h2>Varietals are loading...</h2>
+        <button onClick={() => this.props.history.push("/wines")}>Wines</button>
+      </React.Fragment>
     );
   }
 }

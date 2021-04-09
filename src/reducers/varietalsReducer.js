@@ -5,6 +5,11 @@ const varietalsReducer = (state = { varietals: [] }, action) => {
         ...state,
         varietals: action.varietals,
       };
+    case "FIND_VARIETAL":
+      return {
+        ...state,
+        varietals: action.varietal,
+      };
     default:
       return state;
   }

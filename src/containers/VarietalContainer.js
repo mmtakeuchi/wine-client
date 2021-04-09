@@ -11,26 +11,14 @@ export class VarietalContainer extends Component {
   };
 
   render() {
+    const { varietals } = this.props;
     console.log(this);
+    console.log(varietals);
     return (
       <div>
         <Switch>
-          <Route
-            exact
-            path="/varietals"
-            render={(props) => (
-              <VarietalList
-                {...props}
-                varietals={this.props.varietals.varietals}
-              />
-            )}
-          />
-          <Route
-            path="/varietals/:id"
-            render={(props) => (
-              <Varietal {...props} varietals={this.props.varietals.varietals} />
-            )}
-          />
+          <Route path="/varietals/:id" component={Varietal} />
+          <Route exact path="/varietals" component={VarietalList} />
         </Switch>
       </div>
     );
