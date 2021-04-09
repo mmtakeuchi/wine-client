@@ -42,10 +42,19 @@ export const getWine = (wineId) => {
   };
 };
 
-export const editWine = ({ brand, nose, taste, varietal_id, origin_id }) => {
+export const editWine = (wineObj, id) => {
+  console.log(wineObj, id);
+
+  const { brand, nose, taste, varietal_id, origin_id } = wineObj.wineObj;
   return (dispatch) => {
     axios
-      .patch(baseURL, { brand, nose, taste, varietal_id, origin_id })
+      .patch(`${baseURL}/${wineObj.id}`, {
+        brand,
+        nose,
+        taste,
+        varietal_id,
+        origin_id,
+      })
       .then((resp) => {
         console.log(resp.data);
         return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });

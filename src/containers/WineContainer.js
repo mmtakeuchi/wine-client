@@ -32,7 +32,10 @@ class WineContainer extends Component {
           <Switch>
             <Route exact path="/wines/new" component={WineForm} />
             <Route path="/wines/:id/edit" component={EditWine} />
-            <Route path="/wines/:id" component={Wine} />
+            <Route
+              path="/wines/:id"
+              render={(props) => <Wine {...props} wines={this.props.wines} />}
+            />
             <Route exact path="/wines" component={WineList} />
           </Switch>
         </div>

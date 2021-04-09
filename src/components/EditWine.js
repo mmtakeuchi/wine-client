@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
-import { getWines, editWine } from "../actions/wineActions";
+import { getWine, editWine } from "../actions/wineActions";
 
 class EditWine extends React.Component {
   componentDidMount = () => {
-    this.props.getWines();
+    this.props.getWine(this.props.match.params.id);
     this.props.getVarietals();
     this.props.getOrigins();
   };
@@ -28,7 +28,7 @@ class EditWine extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
-    this.props.editWine(this.state);
+    this.props.editWine({ wineObj: this.state, id: this.props.wine.id });
 
     this.setState({
       brand: "",
@@ -106,12 +106,12 @@ class EditWine extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  wine: state.wines,
+  wine: state.wines.wines,
   varietals: state.varietals.varietals,
   origins: state.origins.origins,
 });
 const mapDispatchToProps = (dispatch) => ({
-  getWines: () => dispatch(getWines()),
+  getWine: (id) => dispatch(getWine(id)),
   editWine: (wine) => dispatch(editWine(wine)),
   getVarietals: () => dispatch(getVarietals()),
   getOrigins: () => dispatch(getOrigins()),

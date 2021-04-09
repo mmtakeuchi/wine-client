@@ -25,12 +25,12 @@ const winesReducer = (state = wines, action) => {
 
     case "EDIT_WINE":
       console.log(action.updatedWine);
-      console.log(...state);
-      let otherWines = state.wines.filter(
-        (wine) => wine.id !== action.updatedWine.id
-      );
-      console.log(otherWines);
-      return { wines: [...otherWines, action.updatedWine] };
+      // console.log(state);
+      // let otherWines = state.wines.filter(
+      //   (wine) => wine.id !== action.updatedWine.id
+      // );
+      // console.log(otherWines);
+      return { wines: [...state.wines, action.updatedWine] };
 
     case "DELETE_WINE":
       console.log(action.deleteWineId);
