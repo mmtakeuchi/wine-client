@@ -11,39 +11,42 @@ import VarietalContainer from "./containers/VarietalContainer";
 import OriginContainer from "./containers/OriginContainer";
 import { CssBaseline } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
+import { loginStatus } from "./actions/userActions";
+import { connect } from "react-redux";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      user: {},
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     isLoggedIn: false,
+  //     user: {},
+  //   };
+  // }
 
   componentDidMount() {
-    this.loginStatus();
+    // this.loginStatus();
+    this.props.loginStatus();
   }
 
-  loginStatus = () => {
-    axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then((response) => {
-        if (response.data.logged_in) {
-          this.handleLogin(response.data);
-        } else {
-          this.handleLogout();
-        }
-      })
-      .catch((error) => console.log("api errors:", error));
-  };
+  // loginStatus = () => {
+  //   axios
+  //     .get("http://localhost:3001/logged_in", { withCredentials: true })
+  //     .then((response) => {
+  //       if (response.data.logged_in) {
+  //         this.handleLogin(response.data);
+  //       } else {
+  //         this.handleLogout();
+  //       }
+  //     })
+  //     .catch((error) => console.log("api errors:", error));
+  // };
 
-  handleLogin = (data) => {
-    this.setState({
-      isLoggedIn: true,
-      user: data.user,
-    });
-  };
+  // handleLogin = (data) => {
+  //   this.setState({
+  //     isLoggedIn: true,
+  //     user: data.user,
+  //   });
+  // };
 
   handleLogout = () => {
     this.setState({
@@ -52,27 +55,22 @@ class App extends Component {
     });
   };
 
-  renderWineContainer = () => {
-    if (this.state.isLoggedIn) {
-      return <WineContainer />;
-    }
-  };
-
   render() {
-    console.log(this.state);
+    console.log(this);
+
     return (
       <div className="main">
         <CssBaseline />
         <Navbar
           handleLogout={this.handleLogout}
-          isLoggedIn={this.state.isLoggedIn}
+          isLoggedIn={this.props.isLoggedIn}
         />
         <Container maxWidth="xl">
           <Switch>
             <Route
               path="/wines"
               render={(props) => (
-                <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+                <WineContainer {...props} isLoggedIn={this.props.isLoggedIn} />
               )}
             />
             <Route
@@ -80,7 +78,7 @@ class App extends Component {
               render={(props) => (
                 <VarietalContainer
                   {...props}
-                  isLoggedIn={this.state.isLoggedIn}
+                  isLoggedIn={this.props.isLoggedIn}
                 />
               )}
             />
@@ -89,7 +87,7 @@ class App extends Component {
               render={(props) => (
                 <OriginContainer
                   {...props}
-                  isLoggedIn={this.state.isLoggedIn}
+                  isLoggedIn={this.props.isLoggedIn}
                 />
               )}
             />
@@ -100,7 +98,7 @@ class App extends Component {
                 <Home
                   {...props}
                   handleLogout={this.handleLogout}
-                  isLoggedIn={this.state.isLoggedIn}
+                  isLoggedIn={this.props.isLoggedIn}
                 />
               )}
             />
@@ -111,7 +109,7 @@ class App extends Component {
                 <Login
                   {...props}
                   handleLogin={this.handleLogin}
-                  isLoggedIn={this.state.isLoggedIn}
+                  isLoggedIn={this.props.isLoggedIn}
                 />
               )}
             />
@@ -122,7 +120,7 @@ class App extends Component {
                 <Signup
                   {...props}
                   handleLogin={this.handleLogin}
-                  isLoggedIn={this.state.isLoggedIn}
+                  isLoggedIn={this.props.isLoggedIn}
                 />
               )}
             />
@@ -132,4 +130,14 @@ class App extends Component {
     );
   }
 }
-export default App;
+
+const mapStateToProps = ({ current }) => ({
+  user: current.user,
+  isLoggedIn: current.isLoggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginStatus: () => dispatch(loginStatus()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
