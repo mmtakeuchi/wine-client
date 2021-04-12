@@ -6,7 +6,6 @@ import WineList from "../components/WineList";
 import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
 import EditWine from "../components/EditWine";
-import OriginList from "../components/OriginList";
 
 class WineContainer extends Component {
   // componentDidMount() {
@@ -22,7 +21,6 @@ class WineContainer extends Component {
     if (this.props.isLoggedIn) {
       return (
         <div>
-          <OriginList />
           {/* <WineList wines={this.props.wines} /> */}
 
           <Switch>

@@ -9,9 +9,8 @@ import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
 import VarietalContainer from "./containers/VarietalContainer";
 import OriginContainer from "./containers/OriginContainer";
-// import WineForm from "./components/WineForm";
-// import VarietalList from "./components/VarietalList";
-// import Varietal from "./components/Varietal";
+import { CssBaseline } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 
 class App extends Component {
   constructor(props) {
@@ -63,66 +62,72 @@ class App extends Component {
     console.log(this.state);
     return (
       <div className="main">
+        <CssBaseline />
         <Navbar
           handleLogout={this.handleLogout}
           isLoggedIn={this.state.isLoggedIn}
         />
-        <Switch>
-          <Route
-            path="/wines"
-            render={(props) => (
-              <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
-            )}
-          />
-          <Route
-            path="/varietals"
-            render={(props) => (
-              <VarietalContainer
-                {...props}
-                isLoggedIn={this.state.isLoggedIn}
-              />
-            )}
-          />
-          <Route
-            path="/origins"
-            render={(props) => (
-              <OriginContainer {...props} isLoggedIn={this.state.isLoggedIn} />
-            )}
-          />
-          <Route
-            exact
-            path="/"
-            render={(props) => (
-              <Home
-                {...props}
-                handleLogout={this.handleLogout}
-                isLoggedIn={this.state.isLoggedIn}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/login"
-            render={(props) => (
-              <Login
-                {...props}
-                handleLogin={this.handleLogin}
-                isLoggedIn={this.state.isLoggedIn}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={(props) => (
-              <Signup
-                {...props}
-                handleLogin={this.handleLogin}
-                isLoggedIn={this.state.isLoggedIn}
-              />
-            )}
-          />
-        </Switch>
+        <Container maxWidth="xl">
+          <Switch>
+            <Route
+              path="/wines"
+              render={(props) => (
+                <WineContainer {...props} isLoggedIn={this.state.isLoggedIn} />
+              )}
+            />
+            <Route
+              path="/varietals"
+              render={(props) => (
+                <VarietalContainer
+                  {...props}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
+              )}
+            />
+            <Route
+              path="/origins"
+              render={(props) => (
+                <OriginContainer
+                  {...props}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Home
+                  {...props}
+                  handleLogout={this.handleLogout}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={(props) => (
+                <Login
+                  {...props}
+                  handleLogin={this.handleLogin}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={(props) => (
+                <Signup
+                  {...props}
+                  handleLogin={this.handleLogin}
+                  isLoggedIn={this.state.isLoggedIn}
+                />
+              )}
+            />
+          </Switch>
+        </Container>
       </div>
     );
   }

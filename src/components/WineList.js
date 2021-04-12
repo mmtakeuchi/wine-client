@@ -14,8 +14,7 @@ export class WineList extends Component {
       <div>
         <Link to="/wines/new">Add Wine</Link>
         <br />
-        <Link to="/varietals">Varietals</Link>
-        <br />
+
         <ul>
           {this.props.wines.length > 0 &&
             this.props.wines.map((wine) => (
