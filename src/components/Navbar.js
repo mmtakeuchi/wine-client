@@ -1,5 +1,7 @@
 import axios from "axios";
 import React from "react";
+import { logoutUser } from "../actions/userActions";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -84,8 +86,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = (props) => {
-  const history = useHistory();
   console.log(props);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -107,13 +110,14 @@ const Navbar = (props) => {
   };
 
   const handleClick = () => {
-    axios
-      .post("http://localhost:3001/logout", { withCredentials: true })
-      .then((resp) => {
-        props.handleLogout();
-        history.push("/");
-      })
-      .catch((error) => console.log(error));
+    // axios
+    //   .post("http://localhost:3001/logout", { withCredentials: true })
+    //   .then((resp) => {
+    //     props.handleLogout();
+    //   })
+    //   .catch((error) => console.log(error));
+    dispatch(logoutUser());
+    history.push("/");
   };
 
   const handleRouting = (route) => {

@@ -68,6 +68,11 @@ const Login = (props) => {
     console.log(values);
     console.log(dispatch(loginUser(user)));
     dispatch(loginUser(user));
+    if (errorMessages) {
+      history.push("/");
+    } else {
+      history.push("/login");
+    }
 
     // axios
     //   .post("http://localhost:3001/login", { user }, { withCredentials: true })
@@ -82,10 +87,6 @@ const Login = (props) => {
     //     }
     //   })
     //   .catch((error) => console.log("api errors:", error));
-  };
-
-  const redirect = () => {
-    history.push("/");
   };
 
   const handleErrors = () => {

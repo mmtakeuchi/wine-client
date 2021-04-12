@@ -62,7 +62,7 @@ class App extends Component {
       <div className="main">
         <CssBaseline />
         <Navbar
-          handleLogout={this.handleLogout}
+          // handleLogout={this.handleLogout}
           isLoggedIn={this.props.isLoggedIn}
         />
         <Container maxWidth="xl">

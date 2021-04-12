@@ -36,3 +36,15 @@ export const loginStatus = () => {
       });
   };
 };
+
+export const logoutUser = () => {
+  return (dispatch) => {
+    axios
+      .post("http://localhost:3001/logout", { withCredentials: true })
+      .then((resp) => dispatch({ type: "LOGOUT_USER" }))
+      .catch((error) => {
+        console.log(error);
+        return dispatch({ type: "USER_ERROR", error });
+      });
+  };
+};

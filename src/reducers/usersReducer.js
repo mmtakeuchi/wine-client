@@ -30,6 +30,12 @@ const usersReducer = (state = initialState, action) => {
         errors: "",
       };
 
+    case "LOGOUT_USER":
+      return {
+        user: {},
+        isLoggedIn: false,
+      };
+
     case "USER_ERROR":
       console.log(action.errors);
       return {
