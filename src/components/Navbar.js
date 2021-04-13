@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { logoutUser } from "../actions/userActions";
 import { useDispatch } from "react-redux";
@@ -90,19 +89,12 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -110,12 +102,6 @@ const Navbar = (props) => {
   };
 
   const handleClick = () => {
-    // axios
-    //   .post("http://localhost:3001/logout", { withCredentials: true })
-    //   .then((resp) => {
-    //     props.handleLogout();
-    //   })
-    //   .catch((error) => console.log(error));
     dispatch(logoutUser());
     history.push("/");
   };
@@ -125,35 +111,6 @@ const Navbar = (props) => {
   };
 
   const menuId = "primary-search-account-menu";
-
-  const renderMenu = (props) => {
-    return props ? (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-      </Menu>
-    ) : (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>Sign In</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
-      </Menu>
-    );
-  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -183,7 +140,7 @@ const Navbar = (props) => {
       </MenuItem>
       <MenuItem>
         <IconButton color="inherit" onClick={handleClick}>
-          {props.isLoggedIn ? "Logout" : "Sign In"}
+          {props.isLoggedIn ? "Logout" : "Log In"}
         </IconButton>
       </MenuItem>
     </Menu>
@@ -248,7 +205,6 @@ const Navbar = (props) => {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
                 onClick={handleClick}
                 color="inherit"
               >
@@ -262,12 +218,11 @@ const Navbar = (props) => {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
                 onClick={() => handleRouting("login")}
                 color="inherit"
               >
                 <Typography className={classes.title} variant="h6" noWrap>
-                  Sign In
+                  Log In
                 </Typography>
               </IconButton>
             )}
@@ -286,7 +241,6 @@ const Navbar = (props) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu(props.isLoggedIn)}
     </div>
   );
 };

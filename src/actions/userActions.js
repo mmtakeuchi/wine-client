@@ -38,8 +38,8 @@ export const createUser = (user) => {
       .post(`${baseURL}/users`, { user }, { withCredentials: true })
       .then((resp) => {
         console.log(resp);
-        if (resp.data.logged_in) {
-          return dispatch({ type: "LOGIN_USER", user: resp.data });
+        if (resp.data.status === "created") {
+          return dispatch({ type: "LOGIN_USER", user: resp.data.user });
         } else {
           return dispatch(errorCreator(resp.data.errors));
         }

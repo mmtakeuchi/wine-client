@@ -11,18 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(1),
-      width: theme.spacing(16),
-      height: theme.spacing(16),
-    },
-  },
   paper: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -31,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    // alignItems: "center",
     textAlign: "center",
   },
   label: {
@@ -54,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
   noAccout: {
     fontSize: "1.2em",
+    margin: "1em",
+  },
+  error: {
+    float: "left",
+    margin: "0.5em 5em",
+    fontSize: "1.25em",
+    color: "red",
   },
 }));
 
@@ -61,17 +58,16 @@ const Login = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const errorMessages = useSelector((state) => state.current.errors);
+  const errorMessages = useSelector((state) => state.current.error);
 
   console.log(errorMessages);
-
   console.log(props);
 
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
-    errors: "",
+    error: "",
   });
 
   const handleChange = (event) => {
@@ -103,11 +99,13 @@ const Login = (props) => {
   const handleErrors = () => {
     return (
       <div>
-        <ul>
-          {errorMessages.map((error) => {
-            return <li key={error}>{error}</li>;
-          })}
-        </ul>
+        {errorMessages.map((error) => {
+          return (
+            <p key={error} className={classes.error}>
+              {error}
+            </p>
+          );
+        })}
       </div>
     );
   };
@@ -173,6 +171,7 @@ const Login = (props) => {
               onChange={handleChange}
             />
           </div>
+          <div>{errorMessages ? handleErrors() : null}</div>
           <div>
             <Button
               type="submit"
@@ -183,15 +182,14 @@ const Login = (props) => {
               Log In
             </Button>
           </div>
-          <div>{errorMessages ? handleErrors() : null}</div>
         </form>
+        <div className={classes.noAccout}>
+          Don't have an account?
+          <Link href="/signup" className={classes.link} variant="body2">
+            Sign Up
+          </Link>
+        </div>
       </Paper>
-      <div className={classes.noAccout}>
-        Don't have an account?
-        <Link href="/signup" className={classes.link} variant="body2">
-          Sign Up
-        </Link>
-      </div>
     </Container>
   );
 };

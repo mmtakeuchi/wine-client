@@ -1,7 +1,7 @@
 const initialState = {
   user: {},
   isLoggedIn: false,
-  errors: "",
+  error: "",
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const usersReducer = (state = initialState, action) => {
         user: action.user.user,
         isLoggedIn: action.user.logged_in,
         users: action.users,
-        errors: "",
+        error: "",
       };
 
     case "LOGIN_USER":
@@ -27,7 +27,7 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         user: action.user.user,
         isLoggedIn: action.user.logged_in,
-        errors: "",
+        error: "",
       };
 
     case "LOGOUT_USER":
@@ -37,11 +37,11 @@ const usersReducer = (state = initialState, action) => {
       };
 
     case "USER_ERROR":
-      console.log(action.errors);
+      console.log(action.error);
       return {
         ...state,
         isLoggedIn: false,
-        errors: action.errors,
+        error: action.error,
       };
 
     default:
