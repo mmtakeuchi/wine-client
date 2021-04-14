@@ -2,29 +2,41 @@ import axios from "axios";
 
 const baseURL = "http://localhost:3001/wines";
 
+const errorCreator = (error) => {
+  return {
+    type: "WINE_ERROR",
+    error: error,
+  };
+};
+
 export const getWines = () => {
   return (dispatch) => {
     axios
       .get(baseURL)
       .then((resp) => {
+        console.log(resp);
         dispatch({ type: "GET_WINES", wines: resp.data });
       })
-      .catch((errors) => {
-        return Promise.reject(errors);
-      });
+      .catch((error) => dispatch(errorCreator(error)));
   };
 };
 
-export const addWine = ({ brand, nose, taste, varietal_id, origin_id }) => {
+export const addWine = (wineObj) => {
+  console.log(wineObj);
   return (dispatch) => {
     axios
-      .post(baseURL, { brand, nose, taste, varietal_id, origin_id })
+      .post(baseURL, { wineObj })
       .then((resp) => {
         console.log(resp);
-        return dispatch({ type: "ADD_WINE", newWine: resp.data });
+        if (resp.data) {
+          return dispatch({ type: "ADD_WINE", newWine: resp.data });
+        } else {
+          return dispatch(errorCreator(resp.data.error));
+        }
       })
       .catch((error) => {
         console.log(error);
+        return dispatch(errorCreator(error));
       });
   };
 };
@@ -34,21 +46,20 @@ export const getWine = (wineId) => {
     axios
       .get(`${baseURL}/${wineId}`)
       .then((resp) => {
+        console.log(resp);
         return dispatch({ type: "GET_WINE", wine: resp.data });
       })
-      .catch((errors) => {
-        return Promise.reject(errors);
-      });
+      .catch((error) => dispatch(errorCreator(error)));
   };
 };
 
-export const editWine = (wineObj, id) => {
+export const editWine = ({ wineObj, id }) => {
   console.log(wineObj, id);
 
-  const { brand, nose, taste, varietal_id, origin_id } = wineObj.wineObj;
+  const { brand, nose, taste, varietal_id, origin_id } = wineObj;
   return (dispatch) => {
     axios
-      .patch(`${baseURL}/${wineObj.id}`, {
+      .patch(`${baseURL}/${id}`, {
         brand,
         nose,
         taste,
@@ -59,9 +70,7 @@ export const editWine = (wineObj, id) => {
         console.log(resp.data);
         return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => dispatch(errorCreator(error)));
   };
 };
 
@@ -73,8 +82,6 @@ export const deleteWine = (wineId) => {
         console.log(resp);
         return dispatch({ type: "DELETE_WINE", deleteWineId: wineId });
       })
-      .catch((errors) => {
-        return Promise.reject(errors);
-      });
+      .catch((error) => dispatch(errorCreator(error)));
   };
 };

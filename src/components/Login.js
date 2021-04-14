@@ -121,7 +121,7 @@ const Login = (props) => {
           <Typography variant="h4">Log In</Typography>
         </div>
 
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Typography variant="h6" className={classes.label}>
             Email
           </Typography>

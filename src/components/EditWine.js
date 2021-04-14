@@ -1,36 +1,135 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { useHistory, withRouter } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
-import { getWine, editWine } from "../actions/wineActions";
+import { getWines, editWine } from "../actions/wineActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import Grid from "@material-ui/core/Grid";
 
-class EditWine extends React.Component {
-  componentDidMount = () => {
-    this.props.getWine(this.props.match.params.id);
-    this.props.getVarietals();
-    this.props.getOrigins();
-  };
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  title: {
+    marginTop: "1em",
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+    textAlign: "center",
+    alignItems: "center",
+  },
+  label: {
+    float: "left",
+    margin: "0.5em 5.5em",
+    fontSize: "1.25em",
+  },
+  field: {
+    width: "80%",
+    margin: "0.5em 4em",
+  },
+  select: {
+    width: "65%",
+    marginLeft: "4em",
+  },
+  origin: {
+    width: "65%",
+    marginRight: "4em",
+  },
+  submit: {
+    width: "70%",
+    margin: theme.spacing(3, 0, 2),
+  },
+  link: {
+    textDecoration: "none",
+    marginLeft: "0.5em",
+    fontSize: "1em",
+  },
+  noAccout: {
+    fontSize: "1.2em",
+    margin: "1em",
+  },
+  error: {
+    float: "left",
+    margin: "0.5em 5em",
+    fontSize: "1.25em",
+    color: "red",
+  },
+}));
 
-  state = {
-    brand: this.props.wine.brand,
-    nose: this.props.wine.nose,
-    taste: this.props.wine.taste,
-    origin_id: this.props.wine.origin_id,
-    varietal_id: this.props.wine.varietal_id,
-  };
+const EditWine = (props) => {
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.wines);
+  const { varietals } = useSelector((state) => state.varietals);
+  const { origins } = useSelector((state) => state.origins);
+  const errorMessages = useSelector((state) => state.wines.error);
 
-  onChange = (e) => {
-    this.setState({
+  const wine = props.wines.find(
+    (wine) => wine.id === parseInt(props.match.params.id, 10)
+  );
+
+  console.log(state);
+  console.log(props);
+  console.log(wine);
+
+  const [values, setValues] = useState({
+    brand: `${wine.brand}`,
+    nose: `${wine.nose}`,
+    taste: `${wine.taste}`,
+    origin_id: `${wine.origin_id}`,
+    varietal_id: `${wine.varietal_id}`,
+  });
+
+  useEffect(() => {
+    dispatch(getWines());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getVarietals());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getOrigins());
+  }, [dispatch]);
+
+  const handleChange = (e) => {
+    setValues({
+      ...values,
       [e.target.name]: e.target.value,
     });
   };
 
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    this.props.editWine({ wineObj: this.state, id: this.props.wine.id });
+    console.log(values);
+    const { brand, nose, taste, origin_id, varietal_id } = values;
+    let wineObj = {
+      brand,
+      nose,
+      taste,
+      origin_id,
+      varietal_id,
+    };
+    console.log(wineObj);
+    dispatch(editWine({ wineObj: wineObj, id: props.match.params.id }));
 
-    this.setState({
+    setValues({
       brand: "",
       nose: "",
       taste: "",
@@ -38,83 +137,149 @@ class EditWine extends React.Component {
       varietal_id: "",
     });
 
-    this.props.history.push(`/wines/${this.props.wine.id}`);
+    history.push(`/wines/${props.match.params.id}`);
   };
 
-  render() {
-    console.log(this);
-
+  if (props.wines.length) {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <input
-            placeholder="brand"
-            type="text"
-            name="brand"
-            value={this.state.brand}
-            onChange={this.onChange}
-          />
-          <input
-            placeholder="nose"
-            type="text"
-            name="nose"
-            value={this.state.nose}
-            onChange={this.onChange}
-          />
-          <input
-            placeholder="taste"
-            type="text"
-            name="taste"
-            value={this.state.taste}
-            onChange={this.onChange}
-          />
-          <select
-            className="varietialSelect"
-            name="varietal_id"
-            value={this.state.varietal_id}
-            onChange={this.onChange}
-          >
-            <option>Varietal</option>
-            {this.props.varietals.map((varietal) => (
-              <option key={varietal.id} value={varietal.id}>
-                {varietal.name}
-              </option>
-            ))}
-          </select>
-          <select
-            className="originSelect"
-            name="origin_id"
-            value={this.state.origin_id}
-            onChange={this.onChange}
-          >
-            <option>Region</option>
-            {this.props.origins.map((origin) => (
-              <option key={origin.id} value={origin.id}>
-                {origin.region}
-              </option>
-            ))}
-          </select>
+      <Container maxWidth="md">
+        <Paper elevation={3} className={classes.paper}>
+          <div className={classes.title}>
+            <Typography variant="h4">Edit Wine</Typography>
+          </div>
 
-          <button placeholder="submit" type="submit">
-            Update Wine
-          </button>
-        </form>
-        <button onClick={() => this.props.history.push("/")}>Home</button>
-      </div>
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
+            <Typography variant="h6" className={classes.label}>
+              Brand
+            </Typography>
+            <div>
+              <TextField
+                className={classes.field}
+                variant="outlined"
+                margin="normal"
+                required
+                id="brand"
+                name="brand"
+                autoComplete="brand"
+                autoFocus
+                value={values.brand}
+                onChange={handleChange}
+              />
+            </div>
+            <Typography variant="h6" className={classes.label}>
+              Nose
+            </Typography>
+            <div>
+              <TextField
+                className={classes.field}
+                variant="outlined"
+                margin="normal"
+                required
+                id="nose"
+                name="nose"
+                autoComplete="nose"
+                autoFocus
+                value={values.nose}
+                onChange={handleChange}
+              />
+            </div>
+            <Typography variant="h6" className={classes.label}>
+              Taste
+            </Typography>
+            <div>
+              <TextField
+                className={classes.field}
+                variant="outlined"
+                margin="normal"
+                required
+                id="taste"
+                name="taste"
+                autoComplete="taste"
+                autoFocus
+                value={values.taste}
+                onChange={handleChange}
+              />
+            </div>
+            <Grid container>
+              <Grid item xs={6}>
+                <FormControl className={classes.select}>
+                  <InputLabel shrink htmlFor="varietal_id">
+                    Varietal
+                  </InputLabel>
+                  <NativeSelect
+                    value={values.varietal_id}
+                    onChange={handleChange}
+                    inputProps={{
+                      name: "varietal_id",
+                      id: "varietal_id",
+                    }}
+                    required
+                  >
+                    <option aria-label="None" value="" />
+                    {varietals.map((varietal) => (
+                      <option key={varietal.id} value={varietal.id}>
+                        {varietal.name}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl className={classes.origin}>
+                  <InputLabel shrink htmlFor="origin_id">
+                    Origin
+                  </InputLabel>
+                  <NativeSelect
+                    value={values.origin_id}
+                    onChange={handleChange}
+                    inputProps={{
+                      name: "origin_id",
+                      id: "origin_id",
+                    }}
+                    required
+                  >
+                    <option aria-label="None" value="" />
+                    {origins.map((origin) => (
+                      <option key={origin.id} value={origin.id}>
+                        {origin.region}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                </FormControl>
+              </Grid>
+            </Grid>
+            {/* <div>{errorMessages ? handleErrors() : null}</div> */}
+            <Button
+              variant="contained"
+              color="primary"
+              placeholder="submit"
+              type="submit"
+              size="small"
+              className={classes.submit}
+            >
+              Edit Wine
+            </Button>
+          </form>
+        </Paper>
+        <Button variant="outlined" onClick={() => history.push("/wines")}>
+          Loading form
+        </Button>
+      </Container>
     );
+  } else {
+    return <div>Loading...</div>;
   }
-}
+};
 
-const mapStateToProps = ({ wines, varietals, origins }) => ({
-  wine: wines.wines,
-  varietals: varietals.varietals,
-  origins: origins.origins,
+const mapStateToProps = ({ wines }) => ({
+  wines: wines.wines,
 });
+
 const mapDispatchToProps = (dispatch) => ({
-  getWine: (id) => dispatch(getWine(id)),
-  editWine: (wine) => dispatch(editWine(wine)),
-  getVarietals: () => dispatch(getVarietals()),
-  getOrigins: () => dispatch(getOrigins()),
+  getWines: () => dispatch(getWines()),
+  editWine: (values, wineId) => dispatch(editWine(values, wineId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditWine);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(EditWine)
+);

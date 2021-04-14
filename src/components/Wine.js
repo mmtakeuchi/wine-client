@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { getWine, deleteWine } from "../actions/wineActions";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import Link from "@material-ui/core/Link";
 
 const Wine = (props) => {
   const dispatch = useDispatch();
@@ -35,10 +36,9 @@ const Wine = (props) => {
           variant="outlined"
           color="default"
           size="small"
-          onClick={handleDelete}
           startIcon={<EditIcon />}
         >
-          <Link to={`/wines/${wines.id}/edit`}>Edit</Link>
+          <Link href={`/wines/${wines.id}/edit`}>Edit</Link>
         </Button>
 
         <Button

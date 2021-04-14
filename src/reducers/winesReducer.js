@@ -1,5 +1,6 @@
 const wines = {
   wines: [],
+  error: "",
 };
 
 const winesReducer = (state = wines, action) => {
@@ -10,6 +11,7 @@ const winesReducer = (state = wines, action) => {
       return {
         ...state,
         wines: action.wines,
+        error: "",
       };
 
     case "ADD_WINE":
@@ -18,19 +20,21 @@ const winesReducer = (state = wines, action) => {
       return {
         ...state,
         wines: [...state.wines, action.newWine],
+        error: "",
       };
 
     case "GET_WINE":
+      console.log(action.wine);
       return { ...state, wines: action.wine };
 
     case "EDIT_WINE":
       console.log(action.updatedWine);
-      // console.log(state);
-      // let otherWines = state.wines.filter(
-      //   (wine) => wine.id !== action.updatedWine.id
-      // );
-      // console.log(otherWines);
-      return { wines: [...state.wines, action.updatedWine] };
+      console.log(state);
+      return {
+        ...state,
+        wines: [...state.wines, action.updatedWine],
+        error: "",
+      };
 
     case "DELETE_WINE":
       console.log(action.deleteWineId);
@@ -41,6 +45,15 @@ const winesReducer = (state = wines, action) => {
       console.log(filteredWine);
       return {
         wines: filteredWine,
+        error: "",
+      };
+
+    case "WINE_ERROR":
+      console.log(action.error);
+      return {
+        ...state,
+        wines: [],
+        error: action.error,
       };
 
     default:
