@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getWines } from "../actions/wineActions";
+import Button from "@material-ui/core/Button";
 
 export class WineList extends Component {
   componentDidMount = () => {
@@ -9,19 +10,32 @@ export class WineList extends Component {
   };
 
   render() {
-    console.log(this);
     return (
       <div>
-        <Link to="/wines/new">Add Wine</Link>
+        <Button variant="outlined" size="small">
+          <Link
+            to="/wines/new"
+            style={{ textDecoration: "none", color: "blue" }}
+          >
+            Add Wine
+          </Link>
+        </Button>
         <br />
 
         <ul>
-          {this.props.wines.length > 0 &&
-            this.props.wines.map((wine) => (
-              <li key={wine.id}>
-                <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
-              </li>
-            ))}
+          {this.props.wines.length &&
+            this.props.wines
+              .sort((a, b) => (a.brand < b.brand ? -1 : 1))
+              .map((wine) => (
+                <li key={wine.id}>
+                  <Link
+                    to={`/wines/${wine.id}`}
+                    style={{ textDecoration: "none", color: "navy" }}
+                  >
+                    {wine.brand}
+                  </Link>
+                </li>
+              ))}
         </ul>
       </div>
     );

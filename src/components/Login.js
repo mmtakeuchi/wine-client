@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     textAlign: "center",
   },
+  title: {
+    marginTop: "1em",
+  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -71,10 +74,9 @@ const Login = (props) => {
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
     setValues({
       ...values,
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -115,9 +117,9 @@ const Login = (props) => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={5} className={classes.paper}>
-        <h1>
+        <div className={classes.title}>
           <Typography variant="h4">Log In</Typography>
-        </h1>
+        </div>
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Typography variant="h6" className={classes.label}>

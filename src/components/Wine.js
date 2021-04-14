@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getWine, deleteWine } from "../actions/wineActions";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 const Wine = (props) => {
   const dispatch = useDispatch();
@@ -10,7 +13,7 @@ const Wine = (props) => {
 
   useEffect(() => {
     dispatch(getWine(wineId));
-  }, [wines]);
+  }, []);
 
   const handleDelete = (id) => {
     dispatch(deleteWine(`${wines.id}`));
@@ -27,10 +30,26 @@ const Wine = (props) => {
         <p>{wines.taste}</p>
         <p>{wines.varietal.name}</p>
         <p>{wines.origin.region}</p>
-        <button>
-          <Link to={`/wines/${wines.id}/edit`}>Edit Wine</Link>
-        </button>
-        <button onClick={handleDelete}>Delete Wine</button>
+
+        <Button
+          variant="outlined"
+          color="default"
+          size="small"
+          onClick={handleDelete}
+          startIcon={<EditIcon />}
+        >
+          <Link to={`/wines/${wines.id}/edit`}>Edit</Link>
+        </Button>
+
+        <Button
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onClick={handleDelete}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button>
       </React.Fragment>
     );
   } else {

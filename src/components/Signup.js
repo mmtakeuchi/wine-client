@@ -19,10 +19,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     textAlign: "center",
   },
+  title: {
+    marginTop: "1em",
+  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    // alignItems: "center",
     textAlign: "center",
   },
   label: {
@@ -98,21 +100,6 @@ const Signup = (props) => {
     } else {
       history.push("/signup");
     }
-
-    // axios
-    //   .post("http://localhost:3001/users", { user }, { withCredentials: true })
-    //   .then((response) => {
-    //     if (response.data.status === "created") {
-    //       this.props.handleLogin(response.data);
-
-    //       this.redirect();
-    //     } else {
-    //       this.setState({
-    //         errors: response.data.errors,
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => console.log("api errors:", error));
   };
 
   const handleErrors = () => {
@@ -134,9 +121,9 @@ const Signup = (props) => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={5} className={classes.paper}>
-        <h1>
+        <div className={classes.title}>
           <Typography variant="h4">Sign Up</Typography>
-        </h1>
+        </div>
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Typography variant="h6" className={classes.label}>

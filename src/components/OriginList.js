@@ -16,11 +16,13 @@ export class OriginList extends Component {
       return (
         <div>
           <ul>
-            {origins.map((origin) => (
-              <li key={origin.id}>
-                <Link to={`/origins/${origin.id}`}>{origin.region}</Link>
-              </li>
-            ))}
+            {origins
+              .sort((a, b) => (a.region < b.region ? -1 : 1))
+              .map((origin) => (
+                <li key={origin.id}>
+                  <Link to={`/origins/${origin.id}`}>{origin.region}</Link>
+                </li>
+              ))}
           </ul>
         </div>
       );

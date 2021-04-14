@@ -13,11 +13,13 @@ export class VarietalList extends Component {
     const { varietals } = this.props.varietals;
 
     const renderVarietal = (varietals) => {
-      return varietals.map((varietal) => (
-        <li key={varietal.id}>
-          <Link to={`/varietals/${varietal.id}`}>{varietal.name}</Link>
-        </li>
-      ));
+      return varietals
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
+        .map((varietal) => (
+          <li key={varietal.id}>
+            <Link to={`/varietals/${varietal.id}`}>{varietal.name}</Link>
+          </li>
+        ));
     };
 
     if (varietals && varietals.length > 0) {
