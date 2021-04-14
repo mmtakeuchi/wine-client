@@ -7,7 +7,7 @@ export const getVarietals = () => {
     axios
       .get(baseURL)
       .then((resp) => {
-        dispatch({ type: "GET_VARIETALS", varietals: resp.data });
+        return dispatch({ type: "GET_VARIETALS", varietals: resp.data });
       })
       .catch((errors) => {
         return Promise.reject(errors);
@@ -21,8 +21,7 @@ export const findVarietal = (varietalId) => {
     axios
       .get(`${baseURL}/${varietalId}`)
       .then((resp) => {
-        console.log(resp);
-        dispatch({ type: "FIND_VARIETAL", varietal: resp.data });
+        return dispatch({ type: "FIND_VARIETAL", varietal: resp.data });
       })
       .catch((errors) => {
         return Promise.reject(errors);

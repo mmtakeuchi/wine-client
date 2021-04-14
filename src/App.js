@@ -26,8 +26,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this);
-
     return (
       <div className="main">
         <CssBaseline />

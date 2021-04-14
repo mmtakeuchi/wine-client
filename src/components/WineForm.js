@@ -77,7 +77,7 @@ const WineForm = (props) => {
   const dispatch = useDispatch();
   const { varietals } = useSelector((state) => state.varietals);
   const { origins } = useSelector((state) => state.origins);
-  const errorMessages = useSelector((state) => state.wines.error);
+  // const errorMessages = useSelector((state) => state.wines.error);
 
   const [values, setValues] = useState({
     brand: "",

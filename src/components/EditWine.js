@@ -78,7 +78,7 @@ const EditWine = (props) => {
   const state = useSelector((state) => state.wines);
   const { varietals } = useSelector((state) => state.varietals);
   const { origins } = useSelector((state) => state.origins);
-  const errorMessages = useSelector((state) => state.wines.error);
+  // const errorMessages = useSelector((state) => state.wines.error);
 
   const wine = props.wines.find(
     (wine) => wine.id === parseInt(props.match.params.id, 10)

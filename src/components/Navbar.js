@@ -85,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = (props) => {
-  console.log(props);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();

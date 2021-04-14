@@ -11,9 +11,6 @@ export class VarietalContainer extends Component {
   };
 
   render() {
-    const { varietals } = this.props;
-    console.log(this);
-    console.log(varietals);
     return (
       <div>
         <Switch>

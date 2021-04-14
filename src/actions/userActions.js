@@ -21,7 +21,6 @@ export const loginUser = (user) => {
     axios
       .post(`${baseURL}/login`, { user }, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
         } else {
@@ -37,7 +36,6 @@ export const createUser = (user) => {
     axios
       .post(`${baseURL}/users`, { user }, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data.status === "created") {
           return dispatch({ type: "LOGIN_USER", user: resp.data.user });
         } else {
@@ -53,7 +51,6 @@ export const loginStatus = () => {
     axios
       .get(`${baseURL}/logged_in`, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
         } else {
@@ -61,7 +58,6 @@ export const loginStatus = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
         return dispatch(errorCreator(error));
       });
   };
@@ -73,7 +69,6 @@ export const logoutUser = () => {
       .post("http://localhost:3001/logout", { withCredentials: true })
       .then((resp) => dispatch({ type: "LOGOUT_USER" }))
       .catch((error) => {
-        console.log(error);
         return dispatch(errorCreator(error));
       });
   };
