@@ -33,7 +33,7 @@ export class OriginList extends Component {
 }
 
 const mapStateToProps = ({ origins }) => ({
-  origins: origins.origins,
+  origins: origins,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -89,13 +89,42 @@ const FilterBar = (props) => {
             </List>
           </Collapse>
         </List>
+
+        <List className={classes.root}>
+          <ListItem button onClick={handleClick}>
+            <ListItemText primary="Countries" />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {props.origins &&
+                props.origins.map((origin) => (
+                  <ListItem button className={classes.nested} key={origin.id}>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      key={origin.id}
+                      value={origin.id}
+                    >
+                      <ListItemText
+                        primary={origin.region}
+                        key={origin.id}
+                        value={origin.id}
+                        onClick={() => history.push(`/origins/${origin.id}`)}
+                      ></ListItemText>
+                    </ListItem>
+                  </ListItem>
+                ))}
+            </List>
+          </Collapse>
+        </List>
       </Toolbar>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  origins: state.origins.origins,
+  origins: state.origins,
   varietals: state.varietals,
   wines: state.wines.wines,
 });

@@ -10,6 +10,8 @@ import VarietalContainer from "./containers/VarietalContainer";
 import VarietalList from "./components/VarietalList";
 import Varietal from "./components/Varietal";
 import OriginContainer from "./containers/OriginContainer";
+import OriginList from "./components/OriginList";
+import Origin from "./components/Origin";
 import { CssBaseline } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { loginStatus } from "./actions/userActions";
@@ -57,12 +59,16 @@ class App extends Component {
               )}
             />
             <Route
+              path="/origins/:id"
+              render={(props) => (
+                <Origin {...props} isLoggedIn={this.props.isLoggedIn} />
+              )}
+            />
+            <Route
+              exact
               path="/origins"
               render={(props) => (
-                <OriginContainer
-                  {...props}
-                  isLoggedIn={this.props.isLoggedIn}
-                />
+                <OriginList {...props} isLoggedIn={this.props.isLoggedIn} />
               )}
             />
             <Route

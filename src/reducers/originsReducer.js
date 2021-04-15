@@ -1,20 +1,10 @@
-const origins = {
-  origins: [],
-};
-
-const originsReducer = (state = origins, action) => {
+const originsReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_ORIGINS":
-      return {
-        ...state,
-        origins: action.origins,
-      };
+      return [...action.origins];
 
     case "FIND_ORIGIN":
-      return {
-        ...state,
-        origins: action.origin,
-      };
+      return [action.origin];
 
     default:
       return state;
