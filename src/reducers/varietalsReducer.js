@@ -1,15 +1,9 @@
-const varietalsReducer = (state = { varietals: [] }, action) => {
+const varietalsReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_VARIETALS":
-      return {
-        ...state,
-        varietals: action.varietals,
-      };
+      return [...action.varietals];
     case "FIND_VARIETAL":
-      return {
-        ...state,
-        varietals: action.varietal,
-      };
+      return [action.varietal];
     default:
       return state;
   }

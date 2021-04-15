@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { findVarietal } from "../actions/varietalActions";
+import { getVarietals } from "../actions/varietalActions";
 
 export class Varietal extends Component {
   componentDidMount = () => {
-    this.props.findVarietal(this.props.match.params.id);
+    this.props.getVarietals();
   };
 
   render() {
     console.log(this);
-    const { varietal } = this.props;
+    const { varietals } = this.props;
+    console.log(varietals);
+
+    const varietal = varietals.find(
+      (varietal) => varietal.id === parseInt(this.props.match.params.id)
+    );
+
     console.log(varietal);
 
     if (varietal && varietal.wines) {
@@ -45,11 +51,11 @@ export class Varietal extends Component {
 }
 
 const mapStateToProps = ({ varietals }) => ({
-  varietal: varietals.varietals,
+  varietals,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  findVarietal: (id) => dispatch(findVarietal(id)),
+  getVarietals: () => dispatch(getVarietals()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Varietal);

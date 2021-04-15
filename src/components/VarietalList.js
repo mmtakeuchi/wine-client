@@ -10,7 +10,7 @@ export class VarietalList extends Component {
 
   render() {
     console.log(this.props);
-    const { varietals } = this.props.varietals;
+    const varietals = this.props.varietals;
 
     const renderVarietal = (varietals) => {
       return varietals

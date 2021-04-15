@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
 import VarietalContainer from "./containers/VarietalContainer";
+import VarietalList from "./components/VarietalList";
+import Varietal from "./components/Varietal";
 import OriginContainer from "./containers/OriginContainer";
 import { CssBaseline } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
@@ -42,12 +44,16 @@ class App extends Component {
               )}
             />
             <Route
+              path="/varietals/:id"
+              render={(props) => (
+                <Varietal {...props} isLoggedIn={this.props.isLoggedIn} />
+              )}
+            />
+            <Route
+              exact
               path="/varietals"
               render={(props) => (
-                <VarietalContainer
-                  {...props}
-                  isLoggedIn={this.props.isLoggedIn}
-                />
+                <VarietalList {...props} isLoggedIn={this.props.isLoggedIn} />
               )}
             />
             <Route

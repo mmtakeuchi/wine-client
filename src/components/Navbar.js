@@ -1,7 +1,7 @@
 import React from "react";
 import { logoutUser } from "../actions/userActions";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -106,7 +106,8 @@ const Navbar = (props) => {
   };
 
   const handleRouting = (route) => {
-    history.push(`/${route}`);
+    // history.push(`/${route}`);
+    <Redirect to={`/${route}`} />;
   };
 
   const menuId = "primary-search-account-menu";

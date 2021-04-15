@@ -1,129 +1,103 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
-class FilterBar extends Component {
-  componentDidMount = () => {
-    this.props.getOrigins();
-    this.props.getWines();
-    this.props.getVarietals();
-  };
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
 
-  state = {
-    anchorEl: null,
-    anchorEl2: null,
+const FilterBar = (props) => {
+  console.log(props);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [values, setValues] = useState({
     varietal_id: "",
     origin_id: "",
+  });
+
+  useEffect(() => {
+    dispatch(getOrigins());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getWines());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getVarietals());
+  }, [dispatch]);
+
+  const handleClick = () => {
+    setOpen(!open);
   };
 
-  handleMenu = (event) => {
-    this.setState({ [event.target.offsetParent.id]: event.currentTarget });
+  const handleFilter = (event) => {
+    setValues({ ...values, [event.target.id]: event.target.value });
   };
 
-  handleFilter = (event) => {
-    this.setState({ [event.target.id]: event.target.value });
-    this.setState({ [event.target.parentNode.parentNode.parentNode.id]: null });
-  };
-
-  handleClose = (event) => {
-    this.setState({ [event.target.parentNode.id]: null });
-  };
-
-  renderName = (id, type) => {
-    if (type === "v") {
-      return this.props.varietals.find((varietal) => varietal.id === id).name;
-    } else {
-      return this.props.origins.find((origin) => origin.id === id).region;
-    }
-  };
-
-  render() {
-    return (
-      <div style={{ display: "flex" }}>
-        <Toolbar
-          style={{
-            margin: "0 auto",
-          }}
-        >
-          <Button
-            id="anchorEl"
-            className="anchorEl"
-            aria-controls="anchorEl"
-            aria-haspopup="true"
-            onClick={this.handleMenu}
-          >
-            {this.state.varietal_id
-              ? this.renderName(this.state.varietal_id, "v")
-              : "Varietals"}
-          </Button>
-          <Menu
-            id="anchorEl"
-            className="anchorEl"
-            aria-controls="anchorEl"
-            anchorEl={this.state.anchorEl}
-            keepMounted
-            open={Boolean(this.state.anchorEl)}
-            onClose={this.handleClose}
-            value="varietal"
-          >
-            {this.props.varietals.map((varietal) => (
-              <MenuItem
-                key={varietal.id}
-                id="varietal_id"
-                className="varietal_id"
-                onClick={this.handleFilter}
-                value={varietal.id}
-              >
-                {varietal.name}
-              </MenuItem>
-            ))}
-          </Menu>
-          <Button
-            id="anchorEl2"
-            aria-controls="anchorEl2"
-            aria-haspopup="true"
-            onClick={this.handleMenu}
-          >
-            {this.state.origin_id
-              ? this.renderName(this.state.origin_id, "o")
-              : "Origins"}
-          </Button>
-          <Menu
-            id="anchorEl2"
-            anchorEl={this.state.anchorEl2}
-            keepMounted
-            open={Boolean(this.state.anchorEl2)}
-            onClose={this.handleClose}
-            value="origin"
-          >
-            {this.props.origins.map((origin) => (
-              <MenuItem
-                key={origin.id}
-                id="origin_id"
-                className="origin_id"
-                onClick={this.handleFilter}
-                value={origin.id}
-              >
-                {origin.region}
-              </MenuItem>
-            ))}
-          </Menu>
-        </Toolbar>
-      </div>
-    );
-  }
-}
+  return (
+    <div style={{ display: "flex" }}>
+      <Toolbar
+        style={{
+          margin: "0 auto",
+        }}
+      >
+        <List className={classes.root}>
+          <ListItem button onClick={handleClick}>
+            <ListItemText primary="Varietals" />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {props.varietals &&
+                props.varietals.map((varietal) => (
+                  <ListItem button className={classes.nested} key={varietal.id}>
+                    <ListItem
+                      button
+                      className={classes.nested}
+                      key={varietal.id}
+                      value={varietal.id}
+                    >
+                      <ListItemText
+                        primary={varietal.name}
+                        key={varietal.id}
+                        value={varietal.id}
+                        onClick={() =>
+                          history.push(`/varietals/${varietal.id}`)
+                        }
+                      ></ListItemText>
+                    </ListItem>
+                  </ListItem>
+                ))}
+            </List>
+          </Collapse>
+        </List>
+      </Toolbar>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   origins: state.origins.origins,
-  varietals: state.varietals.varietals,
-  wines: state.wines,
+  varietals: state.varietals,
+  wines: state.wines.wines,
 });
 
 const mapDispatchToProps = (dispatch) => ({
