@@ -6,10 +6,8 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WineContainer from "./containers/WineContainer";
-import VarietalContainer from "./containers/VarietalContainer";
 import VarietalList from "./components/VarietalList";
 import Varietal from "./components/Varietal";
-import OriginContainer from "./containers/OriginContainer";
 import OriginList from "./components/OriginList";
 import Origin from "./components/Origin";
 import { CssBaseline } from "@material-ui/core";
@@ -33,10 +31,8 @@ class App extends Component {
     return (
       <div className="main">
         <CssBaseline />
-        <Navbar
-          // handleLogout={this.handleLogout}
-          isLoggedIn={this.props.isLoggedIn}
-        />
+        <Navbar isLoggedIn={this.props.isLoggedIn} />
+
         <Container maxWidth="xl">
           <Switch>
             <Route

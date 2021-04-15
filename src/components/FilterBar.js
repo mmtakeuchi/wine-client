@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { getWines, filterWine } from "../actions/wineActions";
+import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -18,10 +17,14 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    display: "flex",
+    textAlign: "center",
+    marginBottom: "1rem",
   },
   list: {
     width: "15rem",
     textAlign: "center",
+    border: "1px solid black",
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -29,9 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FilterBar = (props) => {
-  console.log(props);
   const dispatch = useDispatch();
-  const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -52,10 +53,6 @@ const FilterBar = (props) => {
     dispatch(getVarietals());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(filterWine(values.varietal_id));
-  // }, [values.varietal_id]);
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -65,8 +62,6 @@ const FilterBar = (props) => {
   };
 
   const handleFilter = (event) => {
-    console.log(event.target.parentNode.id);
-    console.log(event.target.parentNode.parentNode.id);
     setValues({
       ...values,
       [event.target.parentNode.parentNode.id]: event.target.parentNode.id,
@@ -75,7 +70,6 @@ const FilterBar = (props) => {
       event.target.parentNode.parentNode.id,
       event.target.parentNode.id
     );
-    // return dispatch(filterWine(event.target.parentNode.id));
   };
 
   const varietalName = () => {
@@ -103,86 +97,107 @@ const FilterBar = (props) => {
   };
 
   return (
-    <div
-      className={classes.root}
-      style={{
-        display: "flex",
-        textAlign: "center",
-        position: "relative",
-        flexWrap: "nowrap",
-      }}
-    >
-      <Grid container spacing={3}>
-        <Grid item xs={6} sm={3}></Grid>
-        <Grid item xs={6} sm={3}>
-          <List className={classes.list}>
-            <ListItem button onClick={handleClick}>
-              <ListItemText primary={renderName("V")} />
-              {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding id="varietal_id">
-                {props.varietals &&
-                  props.varietals.map((varietal) => (
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      id="varietal_id"
-                      key={varietal.id}
-                      value={varietal.id}
-                      onClick={handleFilter}
-                    >
-                      <ListItemText
-                        primary={varietal.name}
-                        key={varietal.id}
-                        value={varietal.id}
-                        id={varietal.id}
-                        onClick={handleClick}
-                        // onClick={() =>
-                        //   history.push(`/varietals/${varietal.id}`)
-                        // }
-                      ></ListItemText>
-                    </ListItem>
-                  ))}
-              </List>
-            </Collapse>
-          </List>
+    <div className={classes.root}>
+      <Container maxWidth="sm">
+        <Grid container spacing={2}>
+          <Grid item sm={6}>
+            <List className={classes.list}>
+              <ListItem button onClick={handleClick}>
+                <ListItemText primary={renderName("V")} />
+                {open ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <Divider />
+                <List component="div" disablePadding id="varietal_id">
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    id="varietal_id"
+                    onClick={handleFilter}
+                  >
+                    <ListItemText
+                      primary="Varietals"
+                      value=""
+                      onClick={handleClick}
+                    ></ListItemText>
+                  </ListItem>
+                  <Divider />
+                  {props.varietals &&
+                    props.varietals.map((varietal) => (
+                      <React.Fragment>
+                        <ListItem
+                          button
+                          className={classes.nested}
+                          id="varietal_id"
+                          key={varietal.id}
+                          value={varietal.id}
+                          onClick={handleFilter}
+                        >
+                          <ListItemText
+                            primary={varietal.name}
+                            key={varietal.id}
+                            value={varietal.id}
+                            id={varietal.id}
+                            onClick={handleClick}
+                          ></ListItemText>
+                        </ListItem>
+                        <Divider />
+                      </React.Fragment>
+                    ))}
+                </List>
+              </Collapse>
+            </List>
+          </Grid>
+          <Grid item sm={6}>
+            <List className={classes.list}>
+              <ListItem button onClick={handleOpen}>
+                <ListItemText primary={renderName("O")} />
+                {menu ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={menu} timeout="auto" unmountOnExit>
+                <Divider />
+                <ListItem
+                  button
+                  className={classes.nested}
+                  id="origin_id"
+                  onClick={handleFilter}
+                >
+                  <ListItemText
+                    primary="Origins"
+                    value=""
+                    onClick={handleOpen}
+                  ></ListItemText>
+                </ListItem>
+                <Divider />
+                <List component="div" disablePadding id="origin_id">
+                  {props.origins &&
+                    props.origins.map((origin) => (
+                      <React.Fragment>
+                        <ListItem
+                          button
+                          className={classes.nested}
+                          id="origin_id"
+                          key={origin.id}
+                          value={origin.id}
+                          onClick={handleFilter}
+                        >
+                          <ListItemText
+                            primary={origin.region}
+                            key={origin.id}
+                            value={origin.id}
+                            id={origin.id}
+                            onClick={handleOpen}
+                          ></ListItemText>
+                        </ListItem>
+                        <Divider />
+                      </React.Fragment>
+                    ))}
+                </List>
+              </Collapse>
+            </List>
+          </Grid>
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <List className={classes.list}>
-            <ListItem button onClick={handleOpen}>
-              <ListItemText primary={renderName("O")} />
-              {menu ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={menu} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding id="origin_id">
-                {props.origins &&
-                  props.origins.map((origin) => (
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      id="origin_id"
-                      key={origin.id}
-                      value={origin.id}
-                      onClick={handleFilter}
-                    >
-                      <ListItemText
-                        primary={origin.region}
-                        key={origin.id}
-                        value={origin.id}
-                        id={origin.id}
-                        onClick={handleOpen}
-                        // onClick={() =>
-                        //   history.push(`/origins/${origin.id}`)
-                        // }
-                      ></ListItemText>
-                    </ListItem>
-                  ))}
-              </List>
-            </Collapse>
-          </List>
-        </Grid>
-      </Grid>
+      </Container>
     </div>
   );
 };

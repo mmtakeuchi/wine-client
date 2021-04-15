@@ -49,6 +49,21 @@ export const getWine = (wineId) => {
   };
 };
 
+export const filterWine = (varietalId) => {
+  return (dispatch) => {
+    axios
+      .get(baseURL)
+      .then((resp) => {
+        return dispatch({
+          type: "FILTER_WINE",
+          wine: resp.data,
+          varietal: varietalId,
+        });
+      })
+      .catch((error) => dispatch(errorCreator(error)));
+  };
+};
+
 export const editWine = ({ wineObj, id }) => {
   console.log(wineObj, id);
 

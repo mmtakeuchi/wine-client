@@ -5,7 +5,7 @@ import WineList from "../components/WineList";
 import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
 import EditWine from "../components/EditWine";
-import { getWines } from "../actions/wineActions";
+import { getWines, filterWine } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import VarietalContainer from "./VarietalContainer";
@@ -15,6 +15,11 @@ import Origin from "../components/Origin";
 import FilterBar from "../components/FilterBar";
 
 class WineContainer extends Component {
+  state = {
+    varietal_id: "",
+    origin_id: "",
+  };
+
   componentDidMount = () => {
     this.props.getOrigins();
     this.props.getWines();
@@ -25,17 +30,29 @@ class WineContainer extends Component {
     this.props.history.push("/");
   };
 
+  handleFilterChange = (name, value) => {
+    this.setState({
+      [name]: value,
+    });
+  };
+
   render() {
     if (this.props.isLoggedIn) {
       return (
         <div>
           <FilterBar
-          // wines={this.props.wines}
-          // varietals={this.props.varietals}
-          // origins={this.props.origins}
+            varietalId={this.state.varietal_id}
+            originId={this.state.origin_id}
+            wines={this.props.wines}
+            varietals={this.props.varietals}
+            origins={this.props.origins}
+            handleFilterChange={this.handleFilterChange}
           />
 
-          <WineList />
+          <WineList
+            originId={this.state.origin_id}
+            varietalId={this.state.varietal_id}
+          />
           <Switch>
             <Route exact path="/wines/new" component={WineForm} />
             <Route path="/wines/:id/edit" component={EditWine} />
@@ -59,7 +76,7 @@ class WineContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  origins: state.origins.origins,
+  origins: state.origins,
   varietals: state.varietals,
   wines: state.wines.wines,
 });

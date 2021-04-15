@@ -30,13 +30,22 @@ const winesReducer = (state = wines, action) => {
       };
 
     case "DELETE_WINE":
-      const filteredWine = state.wines.filter(
+      const keepWines = state.wines.filter(
         (wine) => wine.id !== parseInt(action.deleteWineId)
       );
-
       return {
-        wines: filteredWine,
+        wines: keepWines,
         error: "",
+      };
+
+    case "FILTER_WINE":
+      const filteredWine = state.wines.filter(
+        (wine) => wine.varietal_id === parseInt(action.varietal)
+      );
+      console.log(filteredWine);
+      return {
+        ...state,
+        wines: [...state, filteredWine],
       };
 
     case "WINE_ERROR":
