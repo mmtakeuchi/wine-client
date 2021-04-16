@@ -68,7 +68,6 @@ const Login = (props) => {
 
   const [values, setValues] = useState({
     username: "",
-    email: "",
     password: "",
     error: "",
   });
@@ -82,11 +81,10 @@ const Login = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, email, password } = values;
+    const { username, password } = values;
 
     let user = {
       username: username,
-      email: email,
       password: password,
     };
 
@@ -112,7 +110,7 @@ const Login = (props) => {
     );
   };
 
-  const { username, email, password } = values;
+  const { username, password } = values;
   console.log(values);
   return (
     <Container maxWidth="sm">
@@ -122,23 +120,6 @@ const Login = (props) => {
         </div>
 
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Typography variant="h6" className={classes.label}>
-            Email
-          </Typography>
-          <div>
-            <TextField
-              className={classes.field}
-              variant="outlined"
-              margin="normal"
-              required
-              id="email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={handleChange}
-            />
-          </div>
           <Typography variant="h6" className={classes.label}>
             Username
           </Typography>

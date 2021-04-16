@@ -75,20 +75,23 @@ const EditWine = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.wines);
-  const { varietals } = useSelector((state) => state.varietals);
-  const { origins } = useSelector((state) => state.origins);
+  const wines = useSelector((state) => state.wines);
+  const varietals = useSelector((state) => state.varietals);
+  const origins = useSelector((state) => state.origins);
   // const errorMessages = useSelector((state) => state.wines.error);
 
-  const wine = props.wines.find(
-    (wine) => wine.id === parseInt(props.match.params.id, 10)
-  );
+  let wine;
+  wine =
+    props.wines && props.wines.length
+      ? props.wines.find((wine) => wine.id === parseInt(props.match.params.id))
+      : null;
 
-  console.log(state);
+  console.log(wines);
   console.log(props);
   console.log(wine);
 
   const [values, setValues] = useState({
+    user_id: `${wine.user_id}`,
     brand: `${wine.brand}`,
     nose: `${wine.nose}`,
     taste: `${wine.taste}`,
@@ -118,8 +121,9 @@ const EditWine = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    const { brand, nose, taste, origin_id, varietal_id } = values;
+    const { user_id, brand, nose, taste, origin_id, varietal_id } = values;
     let wineObj = {
+      user_id,
       brand,
       nose,
       taste,
@@ -140,7 +144,7 @@ const EditWine = (props) => {
     history.push(`/wines/${props.match.params.id}`);
   };
 
-  if (props.wines.length) {
+  if (props.wines) {
     return (
       <Container maxWidth="md">
         <Paper elevation={3} className={classes.paper}>
@@ -248,7 +252,7 @@ const EditWine = (props) => {
                 </FormControl>
               </Grid>
             </Grid>
-            {/* <div>{errorMessages ? handleErrors() : null}</div> */}
+
             <Button
               variant="contained"
               color="primary"

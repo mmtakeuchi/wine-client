@@ -72,14 +72,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WineForm = (props) => {
+  console.log(props);
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { varietals } = useSelector((state) => state.varietals);
-  const { origins } = useSelector((state) => state.origins);
+  const varietals = useSelector((state) => state.varietals);
+  const origins = useSelector((state) => state.origins);
   // const errorMessages = useSelector((state) => state.wines.error);
 
   const [values, setValues] = useState({
+    user_id: `${props.user.id}`,
     brand: "",
     nose: "",
     taste: "",
@@ -106,8 +108,9 @@ const WineForm = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    const { brand, nose, taste, origin_id, varietal_id } = values;
+    const { user_id, brand, nose, taste, origin_id, varietal_id } = values;
     let wineObj = {
+      user_id,
       brand,
       nose,
       taste,
@@ -117,6 +120,7 @@ const WineForm = (props) => {
     console.log(wineObj);
     dispatch(addWine(wineObj));
 
+    history.push("/wines");
     setValues({
       brand: "",
       nose: "",
@@ -142,7 +146,6 @@ const WineForm = (props) => {
   //   );
   // };
 
-  console.log(props);
   return (
     <Container maxWidth="md">
       <Paper elevation={3} className={classes.paper}>

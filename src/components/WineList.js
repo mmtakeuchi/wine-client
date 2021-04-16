@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getWines } from "../actions/wineActions";
+import { getVarietals } from "../actions/varietalActions";
+import { getOrigins } from "../actions/originActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
@@ -24,9 +26,6 @@ const useStyles = makeStyles({
     textDecoration: "none",
     color: "blue",
   },
-  container: {
-    backgroundColor: "white",
-  },
 });
 
 const WineList = (props) => {
@@ -36,7 +35,36 @@ const WineList = (props) => {
 
   useEffect(() => {
     dispatch(getWines());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getOrigins());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getVarietals());
+  }, [dispatch]);
+
+  const varietalName = (wine) => {
+    console.log(
+      props.varietals.find(
+        (varietal) => varietal.id === parseInt(wine.varietal_id)
+      ).name
+    );
+    return props.varietals.find(
+      (varietal) => varietal.id === parseInt(wine.varietal_id)
+    ).name;
+  };
+
+  const originRegion = (wine) => {
+    console.log(
+      props.origins.find((origin) => origin.id === parseInt(wine.origin_id))
+        .region
+    );
+    return props.origins.find(
+      (origin) => origin.id === parseInt(wine.origin_id)
+    ).region;
+  };
 
   const filterWines = () => {
     if (props.wines && props.wines.length) {
@@ -56,9 +84,9 @@ const WineList = (props) => {
                     <Link to={`/wines/${wine.id}`} className={classes.link}>
                       {wine.brand}
                     </Link>
+                    <TableCell align="right">{varietalName(wine)}</TableCell>
+                    <TableCell align="right">{originRegion(wine)}</TableCell>
                   </TableCell>
-                  <TableCell align="right">{wine.varietal.name}</TableCell>
-                  <TableCell align="right">{wine.origin.region}</TableCell>
                 </TableRow>
               ))}
           </React.Fragment>
@@ -80,8 +108,9 @@ const WineList = (props) => {
                         {wine.brand}
                       </Link>
                     </TableCell>
-                    <TableCell align="right">{wine.varietal.name}</TableCell>
-                    <TableCell align="right">{wine.origin.region}</TableCell>
+
+                    <TableCell align="right">{varietalName(wine)}</TableCell>
+                    <TableCell align="right">{originRegion(wine)}</TableCell>
                   </TableRow>
                 ))}
           </React.Fragment>
@@ -100,8 +129,8 @@ const WineList = (props) => {
                         {wine.brand}
                       </Link>
                     </TableCell>
-                    <TableCell align="right">{wine.varietal.name}</TableCell>
-                    <TableCell align="right">{wine.origin.region}</TableCell>
+                    <TableCell align="right">{varietalName(wine)}</TableCell>
+                    <TableCell align="right">{originRegion(wine)}</TableCell>
                   </TableRow>
                 ))}
           </React.Fragment>
@@ -119,8 +148,8 @@ const WineList = (props) => {
                         {wine.brand}
                       </Link>
                     </TableCell>
-                    <TableCell align="right">{wine.varietal.name}</TableCell>
-                    <TableCell align="right">{wine.origin.region}</TableCell>
+                    <TableCell align="right">{varietalName(wine)}</TableCell>
+                    <TableCell align="right">{originRegion(wine)}</TableCell>
                   </TableRow>
                 ))}
           </React.Fragment>
@@ -129,54 +158,50 @@ const WineList = (props) => {
     }
   };
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  if (props.wines) {
+    return (
+      <div>
+        <Container maxWidth="md">
+          <Button variant="outlined" size="small">
+            <Link to="/wines/new" className={classes.link}>
+              Add Wine
+            </Link>
+          </Button>
+          <br />
+
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.title}>Wine Brand</TableCell>
+                  <TableCell align="right" className={classes.title}>
+                    Varietal
+                  </TableCell>
+                  <TableCell align="right" className={classes.title}>
+                    Country
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{filterWines()}</TableBody>
+            </Table>
+          </TableContainer>
+        </Container>
+      </div>
+    );
   }
 
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
-
-  return (
-    <div className={classes.contain}>
-      <Container maxWidth="md">
-        <Button variant="outlined" size="small">
-          <Link to="/wines/new" className={classes.link}>
-            Add Wine
-          </Link>
-        </Button>
-        <br />
-
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.title}>Wine Brand</TableCell>
-                <TableCell align="right" className={classes.title}>
-                  Varietal
-                </TableCell>
-                <TableCell align="right" className={classes.title}>
-                  Country
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{filterWines()}</TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-    </div>
-  );
+  return <h1>Relead Page</h1>;
 };
 
 const mapStateToProps = (state) => ({
+  origins: state.origins,
+  varietals: state.varietals,
   wines: state.wines.wines,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getOrigins: () => dispatch(getOrigins()),
+  getVarietals: () => dispatch(getVarietals()),
   getWines: () => dispatch(getWines()),
 });
 

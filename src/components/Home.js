@@ -7,9 +7,11 @@ const Home = (props) => {
   return (
     <div className="home">
       <Container maxWidth="xl">
-        <Link to="/login">Log In</Link>
-        <br></br>
-        <Link to="/signup">Sign Up</Link>
+        <div>
+          <Link to="/login">Log In</Link>
+          <br></br>
+          <Link to="/signup">Sign Up</Link>
+        </div>
       </Container>
     </div>
   );

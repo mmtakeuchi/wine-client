@@ -5,7 +5,7 @@ import WineList from "../components/WineList";
 import Wine from "../components/Wine";
 import WineForm from "../components/WineForm";
 import EditWine from "../components/EditWine";
-import { getWines, filterWine } from "../actions/wineActions";
+import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import VarietalContainer from "./VarietalContainer";
@@ -37,6 +37,7 @@ class WineContainer extends Component {
   };
 
   render() {
+    console.log(this.props);
     if (this.props.isLoggedIn) {
       return (
         <div>
@@ -49,18 +50,35 @@ class WineContainer extends Component {
             handleFilterChange={this.handleFilterChange}
           />
 
-          <WineList
+          {/* <WineList
             originId={this.state.origin_id}
             varietalId={this.state.varietal_id}
-          />
+          /> */}
           <Switch>
-            <Route exact path="/wines/new" component={WineForm} />
+            {/* <Route exact path="/wines/new" component={WineForm} /> */}
+            <Route
+              exact
+              path="/wines/new"
+              render={(props) => <WineForm {...props} user={this.props.user} />}
+            />
             <Route path="/wines/:id/edit" component={EditWine} />
             <Route path="/wines/:id" component={Wine} />
-            <Route path="/origins" component={OriginContainer} />
+            <Route
+              exact
+              path="/wines"
+              render={(props) => (
+                <WineList
+                  {...props}
+                  user={this.props.user}
+                  originId={this.state.origin_id}
+                  varietalId={this.state.varietal_id}
+                />
+              )}
+            />
+            {/* <Route path="/origins" component={OriginContainer} />
             <Route path="/origins/:id" component={Origin} />
             <Route path="/varietals" component={VarietalContainer} />
-            <Route path="/varietals/:id" component={Varietal} />
+            <Route path="/varietals/:id" component={Varietal} /> */}
           </Switch>
         </div>
       );

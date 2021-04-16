@@ -34,12 +34,16 @@ class App extends Component {
         <CssBaseline />
         <Navbar isLoggedIn={this.props.isLoggedIn} />
 
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" className="contain">
           <Switch>
             <Route
               path="/wines"
               render={(props) => (
-                <WineContainer {...props} isLoggedIn={this.props.isLoggedIn} />
+                <WineContainer
+                  {...props}
+                  isLoggedIn={this.props.isLoggedIn}
+                  user={this.props.user}
+                />
               )}
             />
             <Route

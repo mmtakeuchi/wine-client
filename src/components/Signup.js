@@ -69,7 +69,6 @@ const Signup = (props) => {
 
   const [values, setValues] = useState({
     username: "",
-    email: "",
     password: "",
     password_confirmation: "",
     errors: "",
@@ -85,11 +84,10 @@ const Signup = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, email, password, password_confirmation } = values;
+    const { username, password, password_confirmation } = values;
 
     let user = {
       username: username,
-      email: email,
       password: password,
       password_confirmation: password_confirmation,
     };
@@ -116,7 +114,7 @@ const Signup = (props) => {
     );
   };
 
-  const { username, email, password, password_confirmation } = values;
+  const { username, password, password_confirmation } = values;
 
   return (
     <Container maxWidth="sm">
@@ -126,23 +124,6 @@ const Signup = (props) => {
         </div>
 
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
-          <Typography variant="h6" className={classes.label}>
-            Email
-          </Typography>
-          <div>
-            <TextField
-              className={classes.field}
-              variant="outlined"
-              margin="normal"
-              required
-              id="email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={handleChange}
-            />
-          </div>
           <Typography variant="h6" className={classes.label}>
             Username
           </Typography>

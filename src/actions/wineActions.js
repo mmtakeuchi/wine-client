@@ -14,7 +14,6 @@ export const getWines = () => {
     axios
       .get(baseURL)
       .then((resp) => {
-        console.log(resp);
         dispatch({ type: "GET_WINES", wines: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));
@@ -25,8 +24,9 @@ export const addWine = (wineObj) => {
   console.log(wineObj);
   return (dispatch) => {
     axios
-      .post(baseURL, { wineObj })
+      .post(baseURL, wineObj)
       .then((resp) => {
+        console.log(resp);
         if (resp.data) {
           return dispatch({ type: "ADD_WINE", newWine: resp.data });
         } else {
@@ -66,19 +66,13 @@ export const filterWine = (varietalId) => {
 };
 
 export const editWine = ({ wineObj, id }) => {
+  // const { user_id, brand, nose, taste, varietal_id, origin_id } = wineObj;
   console.log(wineObj, id);
-
-  const { brand, nose, taste, varietal_id, origin_id } = wineObj;
   return (dispatch) => {
     axios
-      .patch(`${baseURL}/${id}`, {
-        brand,
-        nose,
-        taste,
-        varietal_id,
-        origin_id,
-      })
+      .patch(`${baseURL}/${id}`, wineObj)
       .then((resp) => {
+        console.log(resp);
         return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));

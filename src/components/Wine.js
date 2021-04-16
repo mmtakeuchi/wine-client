@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
-import { getWine, deleteWine } from "../actions/wineActions";
+import { getWine, deleteWine, getWines } from "../actions/wineActions";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -11,10 +11,18 @@ const Wine = (props) => {
   const dispatch = useDispatch();
   const { wines } = useSelector((state) => state.wines);
   const wineId = props.match.params.id;
+  let wine;
+
+  wine =
+    wines && wines.length
+      ? wines.find((wine) => wine.id === parseInt(wineId))
+      : null;
+
+  console.log(wine);
 
   useEffect(() => {
-    dispatch(getWine(wineId));
-  }, []);
+    dispatch(getWines());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     dispatch(deleteWine(`${wines.id}`));
@@ -23,14 +31,15 @@ const Wine = (props) => {
 
   console.log(wines);
   console.log(props);
-  if (wines && wines.brand) {
+
+  if (wines && wine) {
     return (
       <React.Fragment>
-        <h1>{wines.brand}</h1>
-        <p>{wines.nose}</p>
-        <p>{wines.taste}</p>
-        <p>{wines.varietal.name}</p>
-        <p>{wines.origin.region}</p>
+        <h1>{wine.brand}</h1>
+        <p>{wine.nose}</p>
+        <p>{wine.taste}</p>
+        <p>{wine.varietal.name}</p>
+        <p>{wine.origin.region}</p>
 
         <Button
           variant="outlined"
@@ -38,7 +47,7 @@ const Wine = (props) => {
           size="small"
           startIcon={<EditIcon />}
         >
-          <Link href={`/wines/${wines.id}/edit`}>Edit</Link>
+          <Link href={`/wines/${wine.id}/edit`}>Edit</Link>
         </Button>
 
         <Button
@@ -56,9 +65,9 @@ const Wine = (props) => {
     return (
       <React.Fragment>
         <h2>Sorry we could not find the selected wine.</h2>
-        <button>
-          <Link to="/wines">Back to wine list</Link>
-        </button>
+        <Button variant="outlined" color="default" size="small">
+          <Link href={"/wines"}>Back to wines list</Link>
+        </Button>
       </React.Fragment>
     );
   }
