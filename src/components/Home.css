@@ -1,0 +1,10 @@
+.home {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: url("https://source.unsplash.com/aF1NPSnDQLw");
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}

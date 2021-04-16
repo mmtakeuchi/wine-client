@@ -213,18 +213,13 @@ const Navbar = (props) => {
                 </Typography>
               </IconButton>
             ) : (
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={() => handleRouting("login")}
-                color="inherit"
-              >
-                <Typography className={classes.title} variant="h6" noWrap>
-                  Log In
-                </Typography>
-              </IconButton>
+              <Button>
+                <Link to="/login" className={classes.linkText}>
+                  <Typography className={classes.title} variant="h6" noWrap>
+                    Log In
+                  </Typography>
+                </Link>
+              </Button>
             )}
           </div>
           <div className={classes.sectionMobile}>

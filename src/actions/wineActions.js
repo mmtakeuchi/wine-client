@@ -14,6 +14,7 @@ export const getWines = () => {
     axios
       .get(baseURL)
       .then((resp) => {
+        console.log(resp);
         dispatch({ type: "GET_WINES", wines: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));

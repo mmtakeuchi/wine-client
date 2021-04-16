@@ -169,6 +169,7 @@ const Login = (props) => {
               name="password"
               autoComplete="password"
               autoFocus
+              type="password"
               value={password}
               onChange={handleChange}
             />

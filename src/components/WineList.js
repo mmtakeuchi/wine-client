@@ -24,6 +24,9 @@ const useStyles = makeStyles({
     textDecoration: "none",
     color: "blue",
   },
+  container: {
+    backgroundColor: "white",
+  },
 });
 
 const WineList = (props) => {
@@ -139,7 +142,7 @@ const WineList = (props) => {
   ];
 
   return (
-    <div>
+    <div className={classes.contain}>
       <Container maxWidth="md">
         <Button variant="outlined" size="small">
           <Link to="/wines/new" className={classes.link}>

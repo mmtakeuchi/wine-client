@@ -116,7 +116,7 @@ const FilterBar = (props) => {
                     onClick={handleFilter}
                   >
                     <ListItemText
-                      primary="Varietals"
+                      primary="None"
                       value=""
                       onClick={handleClick}
                     ></ListItemText>
@@ -163,7 +163,7 @@ const FilterBar = (props) => {
                   onClick={handleFilter}
                 >
                   <ListItemText
-                    primary="Origins"
+                    primary="None"
                     value=""
                     onClick={handleOpen}
                   ></ListItemText>
