@@ -124,7 +124,7 @@ const FilterBar = (props) => {
                   <Divider />
                   {props.varietals &&
                     props.varietals.map((varietal) => (
-                      <React.Fragment>
+                      <React.Fragment key={varietal.id}>
                         <ListItem
                           button
                           className={classes.nested}
@@ -172,7 +172,7 @@ const FilterBar = (props) => {
                 <List component="div" disablePadding id="origin_id">
                   {props.origins &&
                     props.origins.map((origin) => (
-                      <React.Fragment>
+                      <React.Fragment key={origin.id}>
                         <ListItem
                           button
                           className={classes.nested}

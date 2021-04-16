@@ -1,144 +1,173 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { filterWine, getWines } from "../actions/wineActions";
+import { connect, useDispatch } from "react-redux";
+import { getWines } from "../actions/wineActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
-export class WineList extends Component {
-  componentDidMount = () => {
-    this.props.getWines();
-  };
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+  title: {
+    fontWeight: "bold",
+  },
+  link: {
+    textDecoration: "none",
+    color: "blue",
+  },
+});
 
-  filterWines = () => {
-    if (this.props.wines && this.props.wines.length) {
-      if (this.props.varietalId && this.props.originId) {
+const WineList = (props) => {
+  console.log(props);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(getWines());
+  }, []);
+
+  const filterWines = () => {
+    if (props.wines && props.wines.length) {
+      if (props.varietalId && props.originId) {
         return (
-          <ul>
-            {this.props.wines
+          <React.Fragment>
+            {props.wines
               .filter(
                 (wine) =>
-                  wine.varietal_id === parseInt(this.props.varietalId) &&
-                  wine.origin_id === parseInt(this.props.originId)
+                  wine.varietal_id === parseInt(props.varietalId) &&
+                  wine.origin_id === parseInt(props.originId)
               )
+              .sort((a, b) => (a.brand < b.brand ? -1 : 1))
               .map((wine) => (
-                <li key={wine.id}>
-                  <h2>
-                    <Link
-                      to={`/wines/${wine.id}`}
-                      style={{ textDecoration: "none", color: "navy" }}
-                    >
+                <TableRow key={wine.id}>
+                  <TableCell component="th" scope="row">
+                    <Link to={`/wines/${wine.id}`} className={classes.link}>
                       {wine.brand}
                     </Link>
-                  </h2>
-                  <p>{wine.varietal.name}</p>
-                  <p>{wine.origin.region}</p>
-                </li>
+                  </TableCell>
+                  <TableCell align="right">{wine.varietal.name}</TableCell>
+                  <TableCell align="right">{wine.origin.region}</TableCell>
+                </TableRow>
               ))}
-          </ul>
+          </React.Fragment>
         );
-      } else if (this.props.varietalId && this.props.originId === "") {
-        console.log(typeof this.props.originId);
+      } else if (props.varietalId && props.originId === "") {
+        console.log(typeof props.originId);
         return (
-          <ul>
-            {this.props.wines
-              .filter(
-                (wine) => wine.varietal_id === parseInt(this.props.varietalId)
-              )
-              .map((wine) => (
-                <li key={wine.id}>
-                  <h2>
-                    <Link
-                      to={`/wines/${wine.id}`}
-                      style={{ textDecoration: "none", color: "navy" }}
-                    >
-                      {wine.brand}
-                    </Link>
-                  </h2>
-                  <div>{wine.varietal.name}</div>
-                  <div>{wine.origin.region}</div>
-                </li>
-              ))}
-          </ul>
+          <React.Fragment>
+            {props.wines.length &&
+              props.wines
+                .filter(
+                  (wine) => wine.varietal_id === parseInt(props.varietalId)
+                )
+                .sort((a, b) => (a.brand < b.brand ? -1 : 1))
+                .map((wine) => (
+                  <TableRow key={wine.id}>
+                    <TableCell component="th" scope="row">
+                      <Link to={`/wines/${wine.id}`} className={classes.link}>
+                        {wine.brand}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="right">{wine.varietal.name}</TableCell>
+                    <TableCell align="right">{wine.origin.region}</TableCell>
+                  </TableRow>
+                ))}
+          </React.Fragment>
         );
-      } else if (this.props.originId && this.props.varietalId === "") {
+      } else if (props.originId && props.varietalId === "") {
         return (
-          <ul>
-            {this.props.wines
-              .filter(
-                (wine) => wine.origin_id === parseInt(this.props.originId)
-              )
-              .map((wine) => (
-                <li key={wine.id}>
-                  <h2>
-                    <Link
-                      to={`/wines/${wine.id}`}
-                      style={{ textDecoration: "none", color: "navy" }}
-                    >
-                      {wine.brand}
-                    </Link>
-                  </h2>
-                  <div>{wine.varietal.name}</div>
-                  <div>{wine.origin.region}</div>
-                </li>
-              ))}
-          </ul>
+          <React.Fragment>
+            {props.wines.length &&
+              props.wines
+                .filter((wine) => wine.origin_id === parseInt(props.originId))
+                .sort((a, b) => (a.brand < b.brand ? -1 : 1))
+                .map((wine) => (
+                  <TableRow key={wine.id}>
+                    <TableCell component="th" scope="row">
+                      <Link to={`/wines/${wine.id}`} className={classes.link}>
+                        {wine.brand}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="right">{wine.varietal.name}</TableCell>
+                    <TableCell align="right">{wine.origin.region}</TableCell>
+                  </TableRow>
+                ))}
+          </React.Fragment>
         );
       } else {
         return (
-          <ul>
-            {this.props.wines.length &&
-              this.props.wines
+          <React.Fragment>
+            {props.wines.length &&
+              props.wines
                 .sort((a, b) => (a.brand < b.brand ? -1 : 1))
                 .map((wine) => (
-                  <li key={wine.id}>
-                    <Link
-                      to={`/wines/${wine.id}`}
-                      style={{ textDecoration: "none", color: "navy" }}
-                    >
-                      {wine.brand}
-                    </Link>
-                  </li>
+                  <TableRow key={wine.id}>
+                    <TableCell component="th" scope="row">
+                      <Link to={`/wines/${wine.id}`} className={classes.link}>
+                        {wine.brand}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="right">{wine.varietal.name}</TableCell>
+                    <TableCell align="right">{wine.origin.region}</TableCell>
+                  </TableRow>
                 ))}
-          </ul>
+          </React.Fragment>
         );
       }
     }
   };
 
-  render() {
-    console.log(this);
-    return (
-      <div>
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+
+  const rows = [
+    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+    createData("Eclair", 262, 16.0, 24, 6.0),
+    createData("Cupcake", 305, 3.7, 67, 4.3),
+    createData("Gingerbread", 356, 16.0, 49, 3.9),
+  ];
+
+  return (
+    <div>
+      <Container maxWidth="md">
         <Button variant="outlined" size="small">
-          <Link
-            to="/wines/new"
-            style={{ textDecoration: "none", color: "blue" }}
-          >
+          <Link to="/wines/new" className={classes.link}>
             Add Wine
           </Link>
         </Button>
         <br />
 
-        {this.filterWines()}
-        {/* <ul>
-          {this.props.wines.length &&
-            this.props.wines
-              .sort((a, b) => (a.brand < b.brand ? -1 : 1))
-              .map((wine) => (
-                <li key={wine.id}>
-                  <Link
-                    to={`/wines/${wine.id}`}
-                    style={{ textDecoration: "none", color: "navy" }}
-                  >
-                    {wine.brand}
-                  </Link>
-                </li>
-              ))}
-        </ul> */}
-      </div>
-    );
-  }
-}
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.title}>Wine Brand</TableCell>
+                <TableCell align="right" className={classes.title}>
+                  Varietal
+                </TableCell>
+                <TableCell align="right" className={classes.title}>
+                  Country
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{filterWines()}</TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   wines: state.wines.wines,
