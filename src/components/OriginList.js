@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import "./OriginList.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrigins } from "../actions/originActions";
+import Container from "@material-ui/core/Container";
 
 export class OriginList extends Component {
   componentDidMount = () => {
@@ -15,15 +17,18 @@ export class OriginList extends Component {
     if (origins && origins.length) {
       return (
         <div>
-          <ul>
-            {origins
-              .sort((a, b) => (a.region < b.region ? -1 : 1))
-              .map((origin) => (
-                <li key={origin.id}>
-                  <Link to={`/origins/${origin.id}`}>{origin.region}</Link>
-                </li>
-              ))}
-          </ul>
+          <Container maxWidth="md">
+            <h1>Counries</h1>
+            <ul className="originList">
+              {origins
+                .sort((a, b) => (a.region < b.region ? -1 : 1))
+                .map((origin) => (
+                  <li key={origin.id} className="origins">
+                    <Link to={`/origins/${origin.id}`}>{origin.region}</Link>
+                  </li>
+                ))}
+            </ul>
+          </Container>
         </div>
       );
     }

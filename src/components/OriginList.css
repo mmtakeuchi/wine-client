@@ -1,0 +1,8 @@
+.originList {
+  column-count: 2;
+  column-width: 10em;
+}
+
+.origins {
+  font-size: 2em;
+}

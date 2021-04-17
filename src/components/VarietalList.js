@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import "./VarietalList.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
+import Container from "@material-ui/core/Container";
 
 export class VarietalList extends Component {
   componentDidMount = () => {
@@ -16,7 +18,7 @@ export class VarietalList extends Component {
       return varietals
         .sort((a, b) => (a.name < b.name ? -1 : 1))
         .map((varietal) => (
-          <li key={varietal.id}>
+          <li key={varietal.id} className="varietals">
             <Link to={`/varietals/${varietal.id}`}>{varietal.name}</Link>
           </li>
         ));
@@ -25,7 +27,10 @@ export class VarietalList extends Component {
     if (varietals && varietals.length > 0) {
       return (
         <div>
-          <ul>{renderVarietal(varietals)}</ul>
+          <Container maxWidth="lg">
+            <h1>Varietals</h1>
+            <ul className="varietalList">{renderVarietal(varietals)}</ul>
+          </Container>
         </div>
       );
     }

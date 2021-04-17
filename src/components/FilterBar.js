@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: "flex",
     textAlign: "center",
-    marginBottom: "1rem",
+    margin: "1rem",
   },
   list: {
     width: "15rem",
@@ -123,27 +123,29 @@ const FilterBar = (props) => {
                   </ListItem>
                   <Divider />
                   {props.varietals &&
-                    props.varietals.map((varietal) => (
-                      <React.Fragment key={varietal.id}>
-                        <ListItem
-                          button
-                          className={classes.nested}
-                          id="varietal_id"
-                          key={varietal.id}
-                          value={varietal.id}
-                          onClick={handleFilter}
-                        >
-                          <ListItemText
-                            primary={varietal.name}
+                    props.varietals
+                      .sort((a, b) => (a.name < b.name ? -1 : 1))
+                      .map((varietal) => (
+                        <React.Fragment key={varietal.id}>
+                          <ListItem
+                            button
+                            className={classes.nested}
+                            id="varietal_id"
                             key={varietal.id}
                             value={varietal.id}
-                            id={varietal.id}
-                            onClick={handleClick}
-                          ></ListItemText>
-                        </ListItem>
-                        <Divider />
-                      </React.Fragment>
-                    ))}
+                            onClick={handleFilter}
+                          >
+                            <ListItemText
+                              primary={varietal.name}
+                              key={varietal.id}
+                              value={varietal.id}
+                              id={varietal.id}
+                              onClick={handleClick}
+                            ></ListItemText>
+                          </ListItem>
+                          <Divider />
+                        </React.Fragment>
+                      ))}
                 </List>
               </Collapse>
             </List>
@@ -171,27 +173,29 @@ const FilterBar = (props) => {
                 <Divider />
                 <List component="div" disablePadding id="origin_id">
                   {props.origins &&
-                    props.origins.map((origin) => (
-                      <React.Fragment key={origin.id}>
-                        <ListItem
-                          button
-                          className={classes.nested}
-                          id="origin_id"
-                          key={origin.id}
-                          value={origin.id}
-                          onClick={handleFilter}
-                        >
-                          <ListItemText
-                            primary={origin.region}
+                    props.origins
+                      .sort((a, b) => (a.region < b.region ? -1 : 1))
+                      .map((origin) => (
+                        <React.Fragment key={origin.id}>
+                          <ListItem
+                            button
+                            className={classes.nested}
+                            id="origin_id"
                             key={origin.id}
                             value={origin.id}
-                            id={origin.id}
-                            onClick={handleOpen}
-                          ></ListItemText>
-                        </ListItem>
-                        <Divider />
-                      </React.Fragment>
-                    ))}
+                            onClick={handleFilter}
+                          >
+                            <ListItemText
+                              primary={origin.region}
+                              key={origin.id}
+                              value={origin.id}
+                              id={origin.id}
+                              onClick={handleOpen}
+                            ></ListItemText>
+                          </ListItem>
+                          <Divider />
+                        </React.Fragment>
+                      ))}
                 </List>
               </Collapse>
             </List>

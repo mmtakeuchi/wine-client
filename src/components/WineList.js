@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 });
 
 const WineList = (props) => {
-  console.log(props);
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -46,24 +45,19 @@ const WineList = (props) => {
   }, [dispatch]);
 
   const varietalName = (wine) => {
-    console.log(
-      props.varietals.find(
+    if (props.varietals.length) {
+      return props.varietals.find(
         (varietal) => varietal.id === parseInt(wine.varietal_id)
-      ).name
-    );
-    return props.varietals.find(
-      (varietal) => varietal.id === parseInt(wine.varietal_id)
-    ).name;
+      ).name;
+    }
   };
 
   const originRegion = (wine) => {
-    console.log(
-      props.origins.find((origin) => origin.id === parseInt(wine.origin_id))
-        .region
-    );
-    return props.origins.find(
-      (origin) => origin.id === parseInt(wine.origin_id)
-    ).region;
+    if (props.origins.length) {
+      return props.origins.find(
+        (origin) => origin.id === parseInt(wine.origin_id)
+      ).region;
+    }
   };
 
   const filterWines = () => {
@@ -92,7 +86,6 @@ const WineList = (props) => {
           </React.Fragment>
         );
       } else if (props.varietalId && props.originId === "") {
-        console.log(typeof props.originId);
         return (
           <React.Fragment>
             {props.wines.length &&
