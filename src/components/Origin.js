@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Origin.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getOrigins, findOrigin } from "../actions/originActions";
+import { getOrigins } from "../actions/originActions";
 import Container from "@material-ui/core/Container";
 
 export class Origin extends Component {
@@ -11,9 +11,7 @@ export class Origin extends Component {
   };
 
   render() {
-    console.log(this);
     const { origins } = this.props;
-    console.log(origins);
 
     const origin = origins.find(
       (origin) => origin.id === parseInt(this.props.match.params.id)
@@ -27,8 +25,10 @@ export class Origin extends Component {
             <h1>{origin.region}</h1>
             <ul className="originList">
               {origin.wines.map((wine) => (
-                <li key={wine.id} className="origin">
-                  <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
+                <li key={wine.id}>
+                  <Link to={`/wines/${wine.id}`} className="origin">
+                    {wine.brand}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -42,12 +42,10 @@ export class Origin extends Component {
 
 const mapStateToProps = ({ origins }) => ({
   origins: origins,
-  // origin: origins,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOrigins: () => dispatch(getOrigins()),
-  findOrigin: (id) => dispatch(findOrigin(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Origin);

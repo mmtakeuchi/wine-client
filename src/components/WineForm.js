@@ -107,7 +107,7 @@ const WineForm = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+
     const { user_id, brand, nose, taste, origin_id, varietal_id } = values;
     let wineObj = {
       user_id,
@@ -117,7 +117,7 @@ const WineForm = (props) => {
       origin_id,
       varietal_id,
     };
-    console.log(wineObj);
+
     dispatch(addWine(wineObj));
 
     history.push("/wines");

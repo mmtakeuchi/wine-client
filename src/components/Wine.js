@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { deleteWine, getWines } from "../actions/wineActions";
+import { getOrigins } from "../actions/originActions";
+import { getVarietals } from "../actions/varietalActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -71,7 +73,10 @@ const useStyles = makeStyles((theme) => ({
 const Wine = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { wines } = useSelector((state) => state.wines);
+  const varietals = useSelector((state) => state.varietals);
+  const origins = useSelector((state) => state.origins);
   const wineId = props.match.params.id;
   let wine;
 
@@ -79,20 +84,38 @@ const Wine = (props) => {
     wines && wines.length
       ? wines.find((wine) => wine.id === parseInt(wineId))
       : null;
+  let varietal =
+    varietals && varietals.length
+      ? varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id))
+          .name
+      : null;
+  let origin =
+    origins && origins.length
+      ? origins.find((origin) => origin.id === parseInt(wine.origin_id)).region
+      : null;
 
   console.log(wine);
+  console.log(varietals);
+  console.log(varietal);
+  console.log(origins);
+  console.log(origin);
 
   useEffect(() => {
     dispatch(getWines());
   }, [dispatch]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteWine(`${wines.id}`));
-    props.history.push("/wines");
-  };
+  useEffect(() => {
+    dispatch(getVarietals());
+  }, [dispatch]);
 
-  console.log(wines);
-  console.log(props);
+  useEffect(() => {
+    dispatch(getOrigins());
+  }, [dispatch]);
+
+  const handleDelete = () => {
+    dispatch(deleteWine(`${wine.id}`));
+    history.push("/wines");
+  };
 
   if (wines && wine) {
     return (
@@ -108,7 +131,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {wine.varietal.name}
+                  {varietal}
                 </Typography>
               </Grid>
               <Grid item xs={2} className={classes.details}>
@@ -116,7 +139,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {wine.origin.region}
+                  {origin}
                 </Typography>
               </Grid>
               <Grid item xs={2} style={{ marginRight: "1em" }}>

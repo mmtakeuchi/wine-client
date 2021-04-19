@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Container from "@material-ui/core/Container";
 import "./Home.css";
+import Button from "@material-ui/core/Button";
 
 const Home = (props) => {
   return (
     <div className="home">
-      <Container maxWidth="xl">
-        <div>
-          <Link to="/login">Log In</Link>
-          <br></br>
-          <Link to="/signup">Sign Up</Link>
+      <div className="con">
+        <h1 className="title">Wine Journal</h1>
+        <div className="intro">
+          <p>Record tasting notes about all the wine you drink.</p>
+          <Button variant="contained">
+            <Link to="/login" className="links">
+              Log In
+            </Link>
+          </Button>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

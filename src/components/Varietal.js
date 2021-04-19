@@ -25,8 +25,10 @@ export class Varietal extends Component {
             {varietal.wines.length > 0 ? (
               <ul className="varietalList">
                 {varietal.wines.map((wine) => (
-                  <li key={wine.id} className="varietal">
-                    <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
+                  <li key={wine.id}>
+                    <Link to={`/wines/${wine.id}`} className="varietal">
+                      {wine.brand}
+                    </Link>
                   </li>
                 ))}
               </ul>

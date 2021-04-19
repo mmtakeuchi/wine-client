@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,27 +13,29 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
   title: {
+    fontSize: "1.5em",
     fontWeight: "bold",
+  },
+  category: {
+    fontSize: "1.4em",
   },
   link: {
     textDecoration: "none",
     color: "blue",
+    fontSize: "1.5em",
   },
 });
 
 const WineList = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-
-  useEffect(() => {
-    dispatch(getWines());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getOrigins());
@@ -46,17 +47,29 @@ const WineList = (props) => {
 
   const varietalName = (wine) => {
     if (props.varietals.length) {
-      return props.varietals.find(
-        (varietal) => varietal.id === parseInt(wine.varietal_id)
-      ).name;
+      return (
+        <Typography className={classes.category}>
+          {
+            props.varietals.find(
+              (varietal) => varietal.id === parseInt(wine.varietal_id)
+            ).name
+          }
+        </Typography>
+      );
     }
   };
 
   const originRegion = (wine) => {
     if (props.origins.length) {
-      return props.origins.find(
-        (origin) => origin.id === parseInt(wine.origin_id)
-      ).region;
+      return (
+        <Typography className={classes.category}>
+          {
+            props.origins.find(
+              (origin) => origin.id === parseInt(wine.origin_id)
+            ).region
+          }
+        </Typography>
+      );
     }
   };
 
@@ -78,8 +91,14 @@ const WineList = (props) => {
                     <Link to={`/wines/${wine.id}`} className={classes.link}>
                       {wine.brand}
                     </Link>
-                    <TableCell align="right">{varietalName(wine)}</TableCell>
-                    <TableCell align="right">{originRegion(wine)}</TableCell>
+                    <TableCell align="right">
+                      <Typography className={classes.category}>
+                        {varietalName(wine)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right" className={classes.category}>
+                      {originRegion(wine)}
+                    </TableCell>
                   </TableCell>
                 </TableRow>
               ))}
@@ -189,13 +208,11 @@ const WineList = (props) => {
 const mapStateToProps = (state) => ({
   origins: state.origins,
   varietals: state.varietals,
-  wines: state.wines.wines,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOrigins: () => dispatch(getOrigins()),
   getVarietals: () => dispatch(getVarietals()),
-  getWines: () => dispatch(getWines()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineList);

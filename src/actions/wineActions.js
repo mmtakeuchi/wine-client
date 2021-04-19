@@ -12,21 +12,22 @@ const errorCreator = (error) => {
 export const getWines = () => {
   return (dispatch) => {
     axios
-      .get(baseURL)
+      .get(baseURL, { withCredentials: true })
       .then((resp) => {
-        dispatch({ type: "GET_WINES", wines: resp.data });
+        if (resp.data) {
+          console.log(resp);
+          return dispatch({ type: "GET_WINES", wines: resp.data });
+        }
       })
       .catch((error) => dispatch(errorCreator(error)));
   };
 };
 
 export const addWine = (wineObj) => {
-  console.log(wineObj);
   return (dispatch) => {
     axios
       .post(baseURL, wineObj)
       .then((resp) => {
-        console.log(resp);
         if (resp.data) {
           return dispatch({ type: "ADD_WINE", newWine: resp.data });
         } else {
@@ -66,11 +67,9 @@ export const filterWine = (varietalId) => {
 };
 
 export const editWine = ({ wineObj, id }) => {
-  // const { user_id, brand, nose, taste, varietal_id, origin_id } = wineObj;
-  console.log(wineObj, id);
   return (dispatch) => {
     axios
-      .patch(`${baseURL}/${id}`, wineObj)
+      .patch(`${baseURL}/${id}`, wineObj, { withCredentials: true })
       .then((resp) => {
         console.log(resp);
         return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });
@@ -82,7 +81,7 @@ export const editWine = ({ wineObj, id }) => {
 export const deleteWine = (wineId) => {
   return (dispatch) => {
     axios
-      .delete(`${baseURL}/${wineId}`)
+      .delete(`${baseURL}/${wineId}`, { withCredentials: true })
       .then((resp) => {
         return dispatch({ type: "DELETE_WINE", deleteWineId: wineId });
       })

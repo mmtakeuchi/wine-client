@@ -22,10 +22,6 @@ class WineContainer extends Component {
     this.props.getVarietals();
   };
 
-  handleRedirect = () => {
-    this.props.history.push("/");
-  };
-
   handleFilterChange = (name, value) => {
     this.setState({
       [name]: value,
@@ -33,6 +29,7 @@ class WineContainer extends Component {
   };
 
   render() {
+    console.log(this.props.wines);
     if (this.props.isLoggedIn) {
       return (
         <div>
@@ -51,15 +48,38 @@ class WineContainer extends Component {
               path="/wines/new"
               render={(props) => <WineForm {...props} user={this.props.user} />}
             />
-            <Route path="/wines/:id/edit" component={EditWine} />
-            <Route path="/wines/:id" component={Wine} />
+            {/* <Route path="/wines/:id/edit" component={EditWine} /> */}
+            <Route
+              path="/wines/:id/edit"
+              render={(props) => (
+                <EditWine
+                  {...props}
+                  user={this.props.user}
+                  wines={this.props.wines}
+                />
+              )}
+            />
+            {/* <Route path="/wines/:id" component={Wine} /> */}
+            <Route
+              path="/wines/:id"
+              render={(props) => (
+                <Wine
+                  {...props}
+                  user={this.props.user}
+                  originId={this.state.origin_id}
+                  varietalId={this.state.varietal_id}
+                  varietals={this.props.varietals}
+                  origins={this.props.origins}
+                />
+              )}
+            />
             <Route
               exact
               path="/wines"
               render={(props) => (
                 <WineList
                   {...props}
-                  user={this.props.user}
+                  wines={this.props.wines}
                   originId={this.state.origin_id}
                   varietalId={this.state.varietal_id}
                 />

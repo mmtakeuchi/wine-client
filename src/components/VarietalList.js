@@ -18,8 +18,10 @@ export class VarietalList extends Component {
       return varietals
         .sort((a, b) => (a.name < b.name ? -1 : 1))
         .map((varietal) => (
-          <li key={varietal.id} className="varietals">
-            <Link to={`/varietals/${varietal.id}`}>{varietal.name}</Link>
+          <li key={varietal.id}>
+            <Link to={`/varietals/${varietal.id}`} className="varietals">
+              {varietal.name}
+            </Link>
           </li>
         ));
     };

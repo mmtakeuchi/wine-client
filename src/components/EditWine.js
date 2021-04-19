@@ -75,33 +75,27 @@ const EditWine = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const wines = useSelector((state) => state.wines);
+  // const wines = useSelector((state) => state.wines);
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
   // const errorMessages = useSelector((state) => state.wines.error);
 
-  let wine;
-  wine =
+  // let wine;
+  // wine =
+  //   wines && wines.length
+  //     ? wines.find((wine) => wine.id === parseInt(props.match.params.id))
+  //     : null;
+
+  let drink;
+  drink =
     props.wines && props.wines.length
       ? props.wines.find((wine) => wine.id === parseInt(props.match.params.id))
       : null;
 
-  console.log(wines);
+  // console.log(wines);
+  console.log(drink);
   console.log(props);
-  console.log(wine);
-
-  const [values, setValues] = useState({
-    user_id: `${wine.user_id}`,
-    brand: `${wine.brand}`,
-    nose: `${wine.nose}`,
-    taste: `${wine.taste}`,
-    origin_id: `${wine.origin_id}`,
-    varietal_id: `${wine.varietal_id}`,
-  });
-
-  useEffect(() => {
-    dispatch(getWines());
-  }, [dispatch]);
+  // console.log(wine);
 
   useEffect(() => {
     dispatch(getVarietals());
@@ -110,6 +104,15 @@ const EditWine = (props) => {
   useEffect(() => {
     dispatch(getOrigins());
   }, [dispatch]);
+
+  const [values, setValues] = useState({
+    user_id: `${props.user.id}` || "",
+    brand: `${drink.brand}` || "",
+    nose: `${drink.nose}` || "",
+    taste: `${drink.taste}` || "",
+    origin_id: `${drink.origin_id} || "`,
+    varietal_id: `${drink.varietal_id}` || "",
+  });
 
   const handleChange = (e) => {
     setValues({
@@ -275,15 +278,16 @@ const EditWine = (props) => {
   }
 };
 
-const mapStateToProps = ({ wines }) => ({
-  wines: wines.wines,
-});
+// const mapStateToProps = (state) => ({
+//   wines: state.wines.wines,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  getWines: () => dispatch(getWines()),
-  editWine: (values, wineId) => dispatch(editWine(values, wineId)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   getWines: () => dispatch(getWines()),
+//   editWine: (values, wineId) => dispatch(editWine(values, wineId)),
+// });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditWine)
-);
+// export default withRouter(
+//   connect(mapStateToProps, mapDispatchToProps)(EditWine)
+// );
+export default withRouter(EditWine);

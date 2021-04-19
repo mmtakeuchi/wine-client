@@ -8,7 +8,7 @@ const winesReducer = (state = wines, action) => {
     case "GET_WINES":
       return {
         ...state,
-        wines: action.wines,
+        wines: [...action.wines],
         error: "",
       };
 
@@ -39,6 +39,7 @@ const winesReducer = (state = wines, action) => {
       const keepWines = state.wines.filter(
         (wine) => wine.id !== parseInt(action.deleteWineId)
       );
+
       return {
         wines: keepWines,
         error: "",
@@ -48,7 +49,7 @@ const winesReducer = (state = wines, action) => {
       const filteredWine = state.wines.filter(
         (wine) => wine.varietal_id === parseInt(action.varietal)
       );
-      console.log(filteredWine);
+
       return {
         ...state,
         wines: [...state, filteredWine],
