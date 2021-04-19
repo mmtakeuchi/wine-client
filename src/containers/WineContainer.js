@@ -8,10 +8,6 @@ import EditWine from "../components/EditWine";
 import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
-import VarietalContainer from "./VarietalContainer";
-import OriginContainer from "./OriginContainer";
-import Varietal from "../components/Varietal";
-import Origin from "../components/Origin";
 import FilterBar from "../components/FilterBar";
 
 class WineContainer extends Component {
@@ -49,12 +45,7 @@ class WineContainer extends Component {
             handleFilterChange={this.handleFilterChange}
           />
 
-          {/* <WineList
-            originId={this.state.origin_id}
-            varietalId={this.state.varietal_id}
-          /> */}
           <Switch>
-            {/* <Route exact path="/wines/new" component={WineForm} /> */}
             <Route
               exact
               path="/wines/new"
@@ -74,10 +65,6 @@ class WineContainer extends Component {
                 />
               )}
             />
-            {/* <Route path="/origins" component={OriginContainer} />
-            <Route path="/origins/:id" component={Origin} />
-            <Route path="/varietals" component={VarietalContainer} />
-            <Route path="/varietals/:id" component={Varietal} /> */}
           </Switch>
         </div>
       );

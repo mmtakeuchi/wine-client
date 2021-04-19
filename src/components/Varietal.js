@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import "./Varietal.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
+import Container from "@material-ui/core/Container";
 
 export class Varietal extends Component {
   componentDidMount = () => {
@@ -18,25 +20,22 @@ export class Varietal extends Component {
     if (varietal && varietal.wines) {
       return (
         <div>
-          <h2>{varietal.name}</h2>
-          {varietal.wines.length > 0 ? (
-            <ul>
-              {varietal.wines.map((wine) => (
-                <li key={wine.id}>
-                  <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>
-              <div>No wines recorded from {varietal.name}.</div>
-            </div>
-          )}
-
-          <br />
-          <button onClick={() => this.props.history.push("/varietals")}>
-            Back
-          </button>
+          <Container maxWidth="lg">
+            <h1>{varietal.name}</h1>
+            {varietal.wines.length > 0 ? (
+              <ul className="varietalList">
+                {varietal.wines.map((wine) => (
+                  <li key={wine.id} className="varietal">
+                    <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div>
+                <div>No wines recorded from {varietal.name}.</div>
+              </div>
+            )}
+          </Container>
         </div>
       );
     }

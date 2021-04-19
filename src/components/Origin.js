@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import "./Origin.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getOrigins, findOrigin } from "../actions/originActions";
+import Container from "@material-ui/core/Container";
 
 export class Origin extends Component {
   componentDidMount = () => {
     this.props.getOrigins();
-    // this.props.findOrigin(this.props.match.params.id);
   };
 
   render() {
@@ -22,14 +23,16 @@ export class Origin extends Component {
     if (origin && origin.wines) {
       return (
         <div>
-          <h2>{origin.region}</h2>
-          <ul>
-            {origin.wines.map((wine) => (
-              <li key={wine.id}>
-                <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
-              </li>
-            ))}
-          </ul>
+          <Container maxWidth="lg">
+            <h1>{origin.region}</h1>
+            <ul className="originList">
+              {origin.wines.map((wine) => (
+                <li key={wine.id} className="origin">
+                  <Link to={`/wines/${wine.id}`}>{wine.brand}</Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
         </div>
       );
     }

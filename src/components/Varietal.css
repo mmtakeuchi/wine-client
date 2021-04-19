@@ -1,0 +1,8 @@
+.varietalList {
+  column-count: 2;
+  column-width: 20em;
+}
+
+.varietal {
+  font-size: 2em;
+}
