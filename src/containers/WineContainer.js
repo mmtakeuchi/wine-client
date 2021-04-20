@@ -50,7 +50,13 @@ class WineContainer extends Component {
 
             <Route
               path="/wines/:id/edit"
-              render={(props) => <EditWine {...props} user={this.props.user} />}
+              render={(props) => (
+                <EditWine
+                  {...props}
+                  user={this.props.user}
+                  wines={this.props.wines}
+                />
+              )}
             />
 
             <Route
@@ -59,6 +65,7 @@ class WineContainer extends Component {
                 <Wine
                   {...props}
                   user={this.props.user}
+                  wines={this.props.wines}
                   originId={this.state.origin_id}
                   varietalId={this.state.varietal_id}
                   varietals={this.props.varietals}

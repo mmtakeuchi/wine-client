@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import { deleteWine, getWines } from "../actions/wineActions";
 import { getOrigins } from "../actions/originActions";
 import { getVarietals } from "../actions/varietalActions";
@@ -13,7 +13,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,9 +67,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  link: {
+    textDecoration: "none",
+    color: "blue",
+  },
 }));
 
 const Wine = (props) => {
+  console.log(props);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -78,20 +82,6 @@ const Wine = (props) => {
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
   const wineId = props.match.params.id;
-
-  let wine =
-    wines && wines.length
-      ? wines.find((wine) => wine.id === parseInt(wineId))
-      : null;
-  let varietal =
-    varietals && varietals.length
-      ? varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id))
-          .name
-      : null;
-  let origin =
-    origins && origins.length
-      ? origins.find((origin) => origin.id === parseInt(wine.origin_id)).region
-      : null;
 
   useEffect(() => {
     dispatch(getWines());
@@ -104,6 +94,19 @@ const Wine = (props) => {
   useEffect(() => {
     dispatch(getOrigins());
   }, [dispatch]);
+
+  let wine =
+    wines && wines.length
+      ? wines.find((wine) => wine.id === parseInt(wineId))
+      : null;
+  let varietal = wine.varietal.name
+    ? wine.varietal
+    : varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id));
+  let origin =
+    origins && wine
+      ? origins.find((origin) => origin.id === parseInt(wine.origin_id))
+      : null;
+  console.log(wine);
 
   const handleDelete = () => {
     dispatch(deleteWine(`${wine.id}`));
@@ -124,7 +127,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {varietal}
+                  {varietal.name}
                 </Typography>
               </Grid>
               <Grid item xs={2} className={classes.details}>
@@ -132,7 +135,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {origin}
+                  {origin.region}
                 </Typography>
               </Grid>
               <Grid item xs={2} style={{ marginRight: "1em" }}>
@@ -164,7 +167,9 @@ const Wine = (props) => {
                 size="small"
                 startIcon={<EditIcon />}
               >
-                <Link href={`/wines/${wine.id}/edit`}>Edit</Link>
+                <Link to={`/wines/${wine.id}/edit`} className={classes.link}>
+                  Edit
+                </Link>
               </Button>
               <Button
                 className={classes.button}
@@ -186,7 +191,7 @@ const Wine = (props) => {
             size="small"
             className={classes.button}
           >
-            <Link href={"/wines"}>Back to wines list</Link>
+            <Link to={"/wines"}>Back to wines list</Link>
           </Button>
         </div>
       </div>
@@ -195,8 +200,9 @@ const Wine = (props) => {
     return (
       <React.Fragment>
         <h2>Sorry we could not find the selected wine.</h2>
+        <Redirect to={`/wines/${props.match.params.id}`} />
         <Button variant="outlined" color="default" size="small">
-          <Link href={"/wines"}>Back to wines list</Link>
+          <Link to={"/wines"}>Back to wines list</Link>
         </Button>
       </React.Fragment>
     );

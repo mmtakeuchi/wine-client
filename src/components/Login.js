@@ -108,7 +108,7 @@ const Login = (props) => {
   };
 
   const { username, password } = values;
-  console.log(values);
+
   return (
     <Container maxWidth="sm">
       <Paper elevation={5} className={classes.paper}>
