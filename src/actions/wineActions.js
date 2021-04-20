@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:3001/wines";
+import { API_ROOT } from "../apiRoot";
 
 const errorCreator = (error) => {
   return {
@@ -12,10 +11,9 @@ const errorCreator = (error) => {
 export const getWines = () => {
   return (dispatch) => {
     axios
-      .get(baseURL, { withCredentials: true })
+      .get(`${API_ROOT}/wines`, { withCredentials: true })
       .then((resp) => {
         if (resp.data) {
-          console.log(resp);
           return dispatch({ type: "GET_WINES", wines: resp.data });
         }
       })
@@ -26,7 +24,7 @@ export const getWines = () => {
 export const addWine = (wineObj) => {
   return (dispatch) => {
     axios
-      .post(baseURL, wineObj)
+      .post(`${API_ROOT}/wines`, wineObj)
       .then((resp) => {
         if (resp.data) {
           return dispatch({ type: "ADD_WINE", newWine: resp.data });
@@ -43,9 +41,8 @@ export const addWine = (wineObj) => {
 export const getWine = (wineId) => {
   return (dispatch) => {
     axios
-      .get(`${baseURL}/${wineId}`)
+      .get(`${API_ROOT}/wines/${wineId}`)
       .then((resp) => {
-        console.log(resp);
         return dispatch({ type: "GET_WINE", wine: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));
@@ -55,7 +52,7 @@ export const getWine = (wineId) => {
 export const filterWine = (varietalId) => {
   return (dispatch) => {
     axios
-      .get(baseURL)
+      .get(`${API_ROOT}/wines`)
       .then((resp) => {
         return dispatch({
           type: "FILTER_WINE",
@@ -70,9 +67,8 @@ export const filterWine = (varietalId) => {
 export const editWine = ({ wineObj, id }) => {
   return (dispatch) => {
     axios
-      .patch(`${baseURL}/${id}`, wineObj, { withCredentials: true })
+      .patch(`${API_ROOT}/wines/${id}`, wineObj, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         return dispatch({ type: "EDIT_WINE", updatedWine: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));
@@ -82,7 +78,7 @@ export const editWine = ({ wineObj, id }) => {
 export const deleteWine = (wineId) => {
   return (dispatch) => {
     axios
-      .delete(`${baseURL}/${wineId}`, { withCredentials: true })
+      .delete(`${API_ROOT}/wines/${wineId}`, { withCredentials: true })
       .then((resp) => {
         return dispatch({ type: "DELETE_WINE", deleteWineId: wineId });
       })

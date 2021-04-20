@@ -106,7 +106,6 @@ const Navbar = (props) => {
   };
 
   const handleRouting = (route) => {
-    // history.push(`/${route}`);
     <Redirect to={`/${route}`} />;
   };
 

@@ -29,7 +29,6 @@ class WineContainer extends Component {
   };
 
   render() {
-    console.log(this.props.wines);
     if (this.props.isLoggedIn) {
       return (
         <div>
@@ -48,12 +47,12 @@ class WineContainer extends Component {
               path="/wines/new"
               render={(props) => <WineForm {...props} user={this.props.user} />}
             />
-            {/* <Route path="/wines/:id/edit" component={EditWine} /> */}
+
             <Route
               path="/wines/:id/edit"
               render={(props) => <EditWine {...props} user={this.props.user} />}
             />
-            {/* <Route path="/wines/:id" component={Wine} /> */}
+
             <Route
               path="/wines/:id"
               render={(props) => (

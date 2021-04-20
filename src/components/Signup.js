@@ -63,10 +63,6 @@ const Signup = (props) => {
   const dispatch = useDispatch();
   const errorMessages = useSelector((state) => state.current.error);
 
-  console.log(errorMessages);
-
-  console.log(props);
-
   const [values, setValues] = useState({
     username: "",
     password: "",

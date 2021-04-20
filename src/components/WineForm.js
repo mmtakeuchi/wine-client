@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WineForm = (props) => {
-  console.log(props);
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();

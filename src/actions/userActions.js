@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:3001";
+import { API_ROOT } from "../apiRoot";
 
 const validateUser = (userObj) => {
   return {
@@ -19,7 +18,7 @@ const errorCreator = (error) => {
 export const loginUser = (user) => {
   return (dispatch) => {
     axios
-      .post(`${baseURL}/login`, { user }, { withCredentials: true })
+      .post(`${API_ROOT}/login`, { user }, { withCredentials: true })
       .then((resp) => {
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
@@ -34,7 +33,7 @@ export const loginUser = (user) => {
 export const createUser = (user) => {
   return (dispatch) => {
     axios
-      .post(`${baseURL}/users`, { user }, { withCredentials: true })
+      .post(`${API_ROOT}/users`, { user }, { withCredentials: true })
       .then((resp) => {
         if (resp.data.status === "created") {
           return dispatch({ type: "LOGIN_USER", user: resp.data.user });
@@ -49,7 +48,7 @@ export const createUser = (user) => {
 export const loginStatus = () => {
   return (dispatch) => {
     axios
-      .get(`${baseURL}/logged_in`, { withCredentials: true })
+      .get(`${API_ROOT}/logged_in`, { withCredentials: true })
       .then((resp) => {
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
@@ -66,7 +65,7 @@ export const loginStatus = () => {
 export const logoutUser = () => {
   return (dispatch) => {
     axios
-      .post("http://localhost:3001/logout", { withCredentials: true })
+      .post(`${API_ROOT}/logout`, { withCredentials: true })
       .then((resp) => dispatch({ type: "LOGOUT_USER" }))
       .catch((error) => {
         return dispatch(errorCreator(error));

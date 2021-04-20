@@ -11,7 +11,6 @@ export class OriginList extends Component {
   };
 
   render() {
-    console.log(this);
     const { origins } = this.props;
 
     if (origins && origins.length) {

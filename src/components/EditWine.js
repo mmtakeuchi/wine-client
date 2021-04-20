@@ -98,11 +98,6 @@ const EditWine = (props) => {
     dispatch(getOrigins());
   }, [dispatch]);
 
-  console.log(wines);
-  console.log(drink);
-  console.log(props);
-  // console.log(wine);
-
   const [values, setValues] = useState({
     user_id: props.user.id,
     brand: drink.brand || "",
@@ -121,7 +116,7 @@ const EditWine = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+
     const { user_id, brand, nose, taste, origin_id, varietal_id } = values;
     let wineObj = {
       user_id,
@@ -131,7 +126,7 @@ const EditWine = (props) => {
       origin_id,
       varietal_id,
     };
-    console.log(wineObj);
+
     dispatch(editWine({ wineObj: wineObj, id: props.match.params.id }));
 
     setValues({

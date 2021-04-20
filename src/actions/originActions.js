@@ -1,11 +1,10 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:3001/origins";
+import { API_ROOT } from "../apiRoot";
 
 export const getOrigins = () => {
   return (dispatch) => {
     axios
-      .get(baseURL)
+      .get(`${API_ROOT}/origins`)
       .then((resp) => {
         dispatch({ type: "GET_ORIGINS", origins: resp.data });
       })
@@ -18,7 +17,7 @@ export const getOrigins = () => {
 export const findOrigin = (originId) => {
   return (dispatch) => {
     axios
-      .get(`${baseURL}/${originId}`)
+      .get(`${API_ROOT}/origins/${originId}`)
       .then((resp) => {
         dispatch({ type: "FIND_ORIGIN", origin: resp.data });
       })

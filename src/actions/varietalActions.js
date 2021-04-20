@@ -1,11 +1,10 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:3001/varietals";
+import { API_ROOT } from "../apiRoot";
 
 export const getVarietals = () => {
   return (dispatch) => {
     axios
-      .get(baseURL)
+      .get(`${API_ROOT}/varietals`)
       .then((resp) => {
         return dispatch({ type: "GET_VARIETALS", varietals: resp.data });
       })
@@ -18,7 +17,7 @@ export const getVarietals = () => {
 export const findVarietal = (varietalId) => {
   return (dispatch) => {
     axios
-      .get(`${baseURL}/${varietalId}`)
+      .get(`${API_ROOT}/varietals/${varietalId}`)
       .then((resp) => {
         return dispatch({ type: "FIND_VARIETAL", varietal: resp.data });
       })

@@ -110,7 +110,6 @@ const Wine = (props) => {
     history.push("/wines");
   };
 
-  console.log(wine);
   if (wines && wine) {
     return (
       <div className={classes.root}>

@@ -63,9 +63,6 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const errorMessages = useSelector((state) => state.current.error);
 
-  console.log(errorMessages);
-  console.log(props);
-
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -89,7 +86,7 @@ const Login = (props) => {
     };
 
     dispatch(loginUser(user));
-    if (!errorMessages) {
+    if (errorMessages) {
       history.push("/wines");
     } else {
       history.push("/login");
