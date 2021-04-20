@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
@@ -73,29 +73,22 @@ const useStyles = makeStyles((theme) => ({
 
 const EditWine = (props) => {
   const classes = useStyles();
-  const history = useHistory();
   const dispatch = useDispatch();
-  // const wines = useSelector((state) => state.wines);
+  const history = useHistory();
+  const { wines } = useSelector((state) => state.wines);
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
+  const wineId = props.match.params.id;
   // const errorMessages = useSelector((state) => state.wines.error);
 
-  // let wine;
-  // wine =
-  //   wines && wines.length
-  //     ? wines.find((wine) => wine.id === parseInt(props.match.params.id))
-  //     : null;
-
-  let drink;
-  drink =
-    props.wines && props.wines.length
-      ? props.wines.find((wine) => wine.id === parseInt(props.match.params.id))
+  let drink =
+    wines && wines.length
+      ? wines.find((wine) => wine.id === parseInt(wineId))
       : null;
 
-  // console.log(wines);
-  console.log(drink);
-  console.log(props);
-  // console.log(wine);
+  useEffect(() => {
+    dispatch(getWines());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getVarietals());
@@ -105,13 +98,18 @@ const EditWine = (props) => {
     dispatch(getOrigins());
   }, [dispatch]);
 
+  console.log(wines);
+  console.log(drink);
+  console.log(props);
+  // console.log(wine);
+
   const [values, setValues] = useState({
-    user_id: `${props.user.id}` || "",
-    brand: `${drink.brand}` || "",
-    nose: `${drink.nose}` || "",
-    taste: `${drink.taste}` || "",
-    origin_id: `${drink.origin_id} || "`,
-    varietal_id: `${drink.varietal_id}` || "",
+    user_id: props.user.id,
+    brand: drink.brand || "",
+    nose: drink.nose || "",
+    taste: drink.taste,
+    origin_id: drink.origin_id,
+    varietal_id: drink.varietal_id,
   });
 
   const handleChange = (e) => {
@@ -147,7 +145,7 @@ const EditWine = (props) => {
     history.push(`/wines/${props.match.params.id}`);
   };
 
-  if (props.wines) {
+  if (wines && drink) {
     return (
       <Container maxWidth="md">
         <Paper elevation={3} className={classes.paper}>
@@ -278,16 +276,4 @@ const EditWine = (props) => {
   }
 };
 
-// const mapStateToProps = (state) => ({
-//   wines: state.wines.wines,
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   getWines: () => dispatch(getWines()),
-//   editWine: (values, wineId) => dispatch(editWine(values, wineId)),
-// });
-
-// export default withRouter(
-//   connect(mapStateToProps, mapDispatchToProps)(EditWine)
-// );
 export default withRouter(EditWine);

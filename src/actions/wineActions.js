@@ -45,6 +45,7 @@ export const getWine = (wineId) => {
     axios
       .get(`${baseURL}/${wineId}`)
       .then((resp) => {
+        console.log(resp);
         return dispatch({ type: "GET_WINE", wine: resp.data });
       })
       .catch((error) => dispatch(errorCreator(error)));

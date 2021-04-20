@@ -51,13 +51,7 @@ class WineContainer extends Component {
             {/* <Route path="/wines/:id/edit" component={EditWine} /> */}
             <Route
               path="/wines/:id/edit"
-              render={(props) => (
-                <EditWine
-                  {...props}
-                  user={this.props.user}
-                  wines={this.props.wines}
-                />
-              )}
+              render={(props) => <EditWine {...props} user={this.props.user} />}
             />
             {/* <Route path="/wines/:id" component={Wine} /> */}
             <Route

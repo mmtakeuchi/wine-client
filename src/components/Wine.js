@@ -78,9 +78,8 @@ const Wine = (props) => {
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
   const wineId = props.match.params.id;
-  let wine;
 
-  wine =
+  let wine =
     wines && wines.length
       ? wines.find((wine) => wine.id === parseInt(wineId))
       : null;
@@ -93,12 +92,6 @@ const Wine = (props) => {
     origins && origins.length
       ? origins.find((origin) => origin.id === parseInt(wine.origin_id)).region
       : null;
-
-  console.log(wine);
-  console.log(varietals);
-  console.log(varietal);
-  console.log(origins);
-  console.log(origin);
 
   useEffect(() => {
     dispatch(getWines());
@@ -117,6 +110,7 @@ const Wine = (props) => {
     history.push("/wines");
   };
 
+  console.log(wine);
   if (wines && wine) {
     return (
       <div className={classes.root}>
