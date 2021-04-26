@@ -9,6 +9,7 @@ const errorCreator = (error) => {
 };
 
 export const getWines = () => {
+  console.log(`${API_ROOT}/wines`);
   return (dispatch) => {
     axios
       .get(`${API_ROOT}/wines`)
