@@ -153,6 +153,7 @@ const WineList = (props) => {
             {props.wines.length &&
               props.wines
                 .sort((a, b) => (a.brand < b.brand ? -1 : 1))
+                .filter((drink) => drink.user_id === props.user.id)
                 .map((wine) => (
                   <TableRow key={wine.id}>
                     <TableCell component="th" scope="row">
