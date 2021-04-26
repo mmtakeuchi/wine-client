@@ -9,10 +9,9 @@ const errorCreator = (error) => {
 };
 
 export const getWines = () => {
-  console.log(`${API_ROOT}/wines`);
   return (dispatch) => {
     axios
-      .get(`${API_ROOT}/wines`)
+      .get(`${API_ROOT}/wines`, { withCredentials: true })
       .then((resp) => {
         console.log(resp);
         if (resp.data) {
