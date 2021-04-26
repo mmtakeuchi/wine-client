@@ -260,7 +260,7 @@ const EditWine = (props) => {
               size="small"
               className={classes.submit}
             >
-              Edit Wine
+              Update Wine
             </Button>
           </form>
         </Paper>

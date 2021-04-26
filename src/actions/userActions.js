@@ -50,6 +50,7 @@ export const loginStatus = () => {
     axios
       .get(`${API_ROOT}/logged_in`, { withCredentials: true })
       .then((resp) => {
+        console.log(resp);
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
         } else {
