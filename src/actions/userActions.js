@@ -36,7 +36,7 @@ export const createUser = (user) => {
       .post(`${API_ROOT}/users`, { user }, { withCredentials: true })
       .then((resp) => {
         if (resp.data.status === "created") {
-          return dispatch({ type: "LOGIN_USER", user: resp.data.user });
+          return dispatch(validateUser(resp.data));
         } else {
           return dispatch(errorCreator(resp.data.errors));
         }

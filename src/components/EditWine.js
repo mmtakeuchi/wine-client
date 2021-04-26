@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, withRouter, Redirect } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import { getWines, editWine } from "../actions/wineActions";

@@ -99,13 +99,29 @@ const Wine = (props) => {
     wines && wines.length
       ? wines.find((wine) => wine.id === parseInt(wineId))
       : null;
-  let varietal = wine.varietal.name
-    ? wine.varietal
-    : varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id));
-  let origin =
-    origins && wine
-      ? origins.find((origin) => origin.id === parseInt(wine.origin_id))
-      : null;
+
+  const varietalName = (wine) => {
+    if (props.varietals.length && wine) {
+      return props.varietals.find(
+        (varietal) => varietal.id === parseInt(wine.varietal_id)
+      ).name;
+    }
+  };
+
+  const originRegion = (wine) => {
+    if (props.origins.length && wine) {
+      return props.origins.find(
+        (origin) => origin.id === parseInt(wine.origin_id)
+      ).region;
+    }
+  };
+  // let varietal = wine.varietal.name
+  //   ? wine.varietal
+  //   : varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id));
+  // let origin =
+  //   origins && wine
+  //     ? origins.find((origin) => origin.id === parseInt(wine.origin_id))
+  //     : null;
   console.log(wine);
 
   const handleDelete = () => {
@@ -127,7 +143,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {varietal.name}
+                  {varietalName(wine)}
                 </Typography>
               </Grid>
               <Grid item xs={2} className={classes.details}>
@@ -135,7 +151,7 @@ const Wine = (props) => {
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h5" className={classes.data}>
-                  {origin.region}
+                  {originRegion(wine)}
                 </Typography>
               </Grid>
               <Grid item xs={2} style={{ marginRight: "1em" }}>

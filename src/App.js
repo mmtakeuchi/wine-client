@@ -47,9 +47,7 @@ class App extends Component {
             />
             <Route
               path="/varietals/:id"
-              render={(props) => (
-                <Varietal {...props} isLoggedIn={this.props.isLoggedIn} />
-              )}
+              render={(props) => <Varietal {...props} user={this.props.user} />}
             />
             <Route
               exact
@@ -60,9 +58,7 @@ class App extends Component {
             />
             <Route
               path="/origins/:id"
-              render={(props) => (
-                <Origin {...props} isLoggedIn={this.props.isLoggedIn} />
-              )}
+              render={(props) => <Origin {...props} user={this.props.user} />}
             />
             <Route
               exact

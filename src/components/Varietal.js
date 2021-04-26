@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Varietal.css";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
 import Container from "@material-ui/core/Container";
 
@@ -11,32 +11,30 @@ export class Varietal extends Component {
   };
 
   render() {
-    const { varietals } = this.props;
+    console.log(this.props);
+    const { varietals, user } = this.props;
 
     const varietal = varietals.find(
       (varietal) => varietal.id === parseInt(this.props.match.params.id)
     );
+    console.log(varietal);
 
-    if (varietal && varietal.wines) {
+    if (varietal && user) {
       return (
         <div>
           <Container maxWidth="lg">
             <h1>{varietal.name}</h1>
-            {varietal.wines.length > 0 ? (
-              <ul className="varietalList">
-                {varietal.wines.map((wine) => (
-                  <li key={wine.id}>
-                    <Link to={`/wines/${wine.id}`} className="varietal">
-                      {wine.brand}
+            <ul className="varietalList">
+              {varietal.wines
+                .filter((wine) => wine.user_id === user.id)
+                .map((drink) => (
+                  <li key={drink.id}>
+                    <Link to={`/wines/${drink.id}`} className="varietal">
+                      {drink.brand}
                     </Link>
                   </li>
                 ))}
-              </ul>
-            ) : (
-              <div>
-                <div>No wines recorded from {varietal.name}.</div>
-              </div>
-            )}
+            </ul>
           </Container>
         </div>
       );
@@ -44,18 +42,16 @@ export class Varietal extends Component {
 
     return (
       <div>
-        <h2>Couldn't find selected varietal</h2>
-        <br />
-        <button onClick={() => this.props.history.push("/wines")}>
-          Back to Wines
-        </button>
+        <h2>Loading varietal...</h2>
+
+        <Redirect to="/varietals" />
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ varietals }) => ({
-  varietals,
+  varietals: varietals,
 });
 
 const mapDispatchToProps = (dispatch) => ({

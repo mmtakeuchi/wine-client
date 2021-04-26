@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Origin.css";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { getOrigins } from "../actions/originActions";
 import Container from "@material-ui/core/Container";
 
@@ -11,31 +11,41 @@ export class Origin extends Component {
   };
 
   render() {
-    const { origins } = this.props;
+    const { origins, user } = this.props;
+    console.log(origins);
 
     const origin = origins.find(
       (origin) => origin.id === parseInt(this.props.match.params.id)
     );
 
-    if (origin && origin.wines) {
+    console.log(origin);
+
+    if (origin && user) {
       return (
         <div>
           <Container maxWidth="lg">
             <h1>{origin.region}</h1>
             <ul className="originList">
-              {origin.wines.map((wine) => (
-                <li key={wine.id}>
-                  <Link to={`/wines/${wine.id}`} className="origin">
-                    {wine.brand}
-                  </Link>
-                </li>
-              ))}
+              {origin.wines
+                .filter((wine) => wine.user_id === user.id)
+                .map((drink) => (
+                  <li key={drink.id}>
+                    <Link to={`/wines/${drink.id}`} className="origin">
+                      {drink.brand}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </Container>
         </div>
       );
     }
-    return <div>Loading Region</div>;
+    return (
+      <div>
+        Loading Region...
+        <Redirect to="/origins" />
+      </div>
+    );
   }
 }
 
