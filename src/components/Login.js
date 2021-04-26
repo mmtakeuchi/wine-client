@@ -87,10 +87,9 @@ const Login = (props) => {
 
     dispatch(loginUser(user));
     if (errorMessages) {
-      history.push("/wines");
-    } else {
       history.push("/login");
     }
+    history.push("/wines");
   };
 
   const handleErrors = () => {

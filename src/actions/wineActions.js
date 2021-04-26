@@ -11,7 +11,7 @@ const errorCreator = (error) => {
 export const getWines = () => {
   return (dispatch) => {
     axios
-      .get(`${API_ROOT}/wines`, { withCredentials: true })
+      .get(`${API_ROOT}/wines`)
       .then((resp) => {
         console.log(resp);
         if (resp.data) {

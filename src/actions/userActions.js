@@ -20,6 +20,7 @@ export const loginUser = (user) => {
     axios
       .post(`${API_ROOT}/login`, { user }, { withCredentials: true })
       .then((resp) => {
+        console.log(resp);
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
         } else {
