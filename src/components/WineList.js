@@ -79,6 +79,7 @@ const WineList = (props) => {
         return (
           <React.Fragment>
             {props.wines
+              .filter((wine) => wine.user_id === props.user.id)
               .filter(
                 (wine) =>
                   wine.varietal_id === parseInt(props.varietalId) &&
@@ -109,6 +110,7 @@ const WineList = (props) => {
           <React.Fragment>
             {props.wines.length &&
               props.wines
+
                 .filter(
                   (wine) => wine.varietal_id === parseInt(props.varietalId)
                 )
@@ -132,6 +134,7 @@ const WineList = (props) => {
           <React.Fragment>
             {props.wines.length &&
               props.wines
+                .filter((wine) => wine.user_id === props.user.id)
                 .filter((wine) => wine.origin_id === parseInt(props.originId))
                 .sort((a, b) => (a.brand < b.brand ? -1 : 1))
                 .map((wine) => (
@@ -152,8 +155,8 @@ const WineList = (props) => {
           <React.Fragment>
             {props.wines.length &&
               props.wines
+                .filter((wine) => wine.user_id === props.user.id)
                 .sort((a, b) => (a.brand < b.brand ? -1 : 1))
-                .filter((drink) => drink.user_id === props.user.id)
                 .map((wine) => (
                   <TableRow key={wine.id}>
                     <TableCell component="th" scope="row">
@@ -171,6 +174,11 @@ const WineList = (props) => {
     }
   };
 
+  console.log(
+    props.wines
+      .filter((wine) => wine.user_id === props.user.id)
+      .sort((a, b) => (a.brand < b.brand ? -1 : 1))
+  );
   if (props.wines) {
     return (
       <div>

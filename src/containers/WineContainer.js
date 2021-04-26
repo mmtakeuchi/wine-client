@@ -80,6 +80,7 @@ class WineContainer extends Component {
               render={(props) => (
                 <WineList
                   {...props}
+                  user={this.props.user}
                   wines={this.props.wines}
                   originId={this.state.origin_id}
                   varietalId={this.state.varietal_id}
