@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Wine Journal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Wine Journal is an application to record a wines brand, nose, taste, varietal, and origin. A user can also filter wines based on the varietal type and/or place of origin.
+
+The frontend was built with React/Redux, and utilizes Material UI for components. The backend was built with Rails API and the repo can be found, <a href="https://github.com/mmtakeuchi/wine-server">here</a>.
+
+## Demo
+
+<a href="https://wine-journal-client.herokuapp.com/" target="_blank">Wine Journal</a>
+
+<img src="/public/assets/wine-home.png">
+<img src="/public/assets/wine-index.png">
+<img src="/public/assets/wine-show.png">
 
 ## Available Scripts
 
@@ -39,32 +49,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The repository is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
