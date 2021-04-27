@@ -9,6 +9,7 @@ import { getWines } from "../actions/wineActions";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
 import FilterBar from "../components/FilterBar";
+import NoUser from "../components/NoUser";
 
 class WineContainer extends Component {
   state = {
@@ -94,8 +95,7 @@ class WineContainer extends Component {
 
     return (
       <div>
-        Sorry no Wines
-        <button onClick={this.handleRedirect}>Back Home</button>
+        <NoUser />
       </div>
     );
   }

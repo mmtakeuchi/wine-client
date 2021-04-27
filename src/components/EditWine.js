@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
 import { getVarietals } from "../actions/varietalActions";
 import { getOrigins } from "../actions/originActions";
-import { getWines, editWine } from "../actions/wineActions";
+import { editWine } from "../actions/wineActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";

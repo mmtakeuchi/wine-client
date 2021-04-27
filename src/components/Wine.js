@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link, Redirect } from "react-router-dom";
 import { deleteWine, getWines } from "../actions/wineActions";
-import { getOrigins } from "../actions/originActions";
-import { getVarietals } from "../actions/varietalActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -79,20 +77,10 @@ const Wine = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { wines } = useSelector((state) => state.wines);
-  const varietals = useSelector((state) => state.varietals);
-  const origins = useSelector((state) => state.origins);
   const wineId = props.match.params.id;
 
   useEffect(() => {
     dispatch(getWines());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getVarietals());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getOrigins());
   }, [dispatch]);
 
   let wine =
@@ -115,14 +103,6 @@ const Wine = (props) => {
       ).region;
     }
   };
-  // let varietal = wine.varietal.name
-  //   ? wine.varietal
-  //   : varietals.find((varietal) => varietal.id === parseInt(wine.varietal_id));
-  // let origin =
-  //   origins && wine
-  //     ? origins.find((origin) => origin.id === parseInt(wine.origin_id))
-  //     : null;
-  console.log(wine);
 
   const handleDelete = () => {
     dispatch(deleteWine(`${wine.id}`));
