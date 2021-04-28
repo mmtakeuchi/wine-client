@@ -10,16 +10,17 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.user.user,
-        isLoggedIn: action.user.logged_in,
+        isLoggedIn: true,
         users: action.users,
         error: "",
       };
 
     case "LOGIN_USER":
+      console.log(action.user);
       return {
         ...state,
-        user: action.user.user,
-        isLoggedIn: action.user.logged_in,
+        user: action.user,
+        isLoggedIn: true,
         error: "",
       };
 

@@ -89,9 +89,8 @@ const Signup = (props) => {
     };
 
     dispatch(createUser(user));
+
     if (errorMessages) {
-      history.push("/");
-    } else {
       history.push("/signup");
     }
   };

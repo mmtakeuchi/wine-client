@@ -13,7 +13,6 @@ export const getWines = () => {
     axios
       .get(`${API_ROOT}/wines`, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data) {
           return dispatch({ type: "GET_WINES", wines: resp.data });
         }

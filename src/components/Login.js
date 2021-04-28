@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { loginUser } from "../actions/userActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -8,7 +8,6 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -89,7 +88,6 @@ const Login = (props) => {
     if (errorMessages) {
       history.push("/login");
     }
-    history.push("/wines");
   };
 
   const handleErrors = () => {
@@ -165,7 +163,7 @@ const Login = (props) => {
         </form>
         <div className={classes.noAccout}>
           Don't have an account?
-          <Link href="/signup" className={classes.link} variant="body2">
+          <Link to="/signup" className={classes.link} variant="body2">
             Sign Up
           </Link>
         </div>

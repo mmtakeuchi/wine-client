@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_ROOT } from "../apiRoot";
+import history from "../util/history";
 
 const validateUser = (userObj) => {
   return {
@@ -20,9 +21,9 @@ export const loginUser = (user) => {
     axios
       .post(`${API_ROOT}/login`, { user }, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data.logged_in) {
-          return dispatch(validateUser(resp.data));
+          history.push("/wines");
+          return dispatch(validateUser(resp.data.user));
         } else {
           return dispatch(errorCreator(resp.data.errors));
         }
@@ -37,7 +38,8 @@ export const createUser = (user) => {
       .post(`${API_ROOT}/users`, { user }, { withCredentials: true })
       .then((resp) => {
         if (resp.data.status === "created") {
-          return dispatch(validateUser(resp.data));
+          history.push("/wines");
+          return dispatch(validateUser(resp.data.user));
         } else {
           return dispatch(errorCreator(resp.data.errors));
         }
@@ -51,7 +53,6 @@ export const loginStatus = () => {
     axios
       .get(`${API_ROOT}/logged_in`, { withCredentials: true })
       .then((resp) => {
-        console.log(resp);
         if (resp.data.logged_in) {
           return dispatch(validateUser(resp.data));
         } else {
