@@ -30,7 +30,6 @@ class WineContainer extends Component {
   };
 
   render() {
-    console.log(this);
     if (this.props.isLoggedIn) {
       return (
         <div>

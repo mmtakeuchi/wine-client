@@ -174,11 +174,6 @@ const WineList = (props) => {
     }
   };
 
-  console.log(
-    props.wines
-      .filter((wine) => wine.user_id === props.user.id)
-      .sort((a, b) => (a.brand < b.brand ? -1 : 1))
-  );
   if (props.wines) {
     return (
       <div>

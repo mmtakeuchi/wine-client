@@ -77,7 +77,6 @@ const WineForm = (props) => {
   const dispatch = useDispatch();
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
-  // const errorMessages = useSelector((state) => state.wines.error);
 
   const [values, setValues] = useState({
     user_id: `${props.user.id}`,
@@ -127,23 +126,7 @@ const WineForm = (props) => {
       origin_id: "",
       varietal_id: "",
     });
-
-    // history.push("/wines");
   };
-
-  // const handleErrors = () => {
-  //   return (
-  //     <div>
-  //       {errorMessages.map((error) => {
-  //         return (
-  //           <p key={error} className={classes.error}>
-  //             {error}
-  //           </p>
-  //         );
-  //       })}
-  //     </div>
-  //   );
-  // };
 
   return (
     <Container maxWidth="md">

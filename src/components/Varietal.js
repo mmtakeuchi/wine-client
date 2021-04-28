@@ -11,13 +11,11 @@ export class Varietal extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { varietals, user } = this.props;
 
     const varietal = varietals.find(
       (varietal) => varietal.id === parseInt(this.props.match.params.id)
     );
-    console.log(varietal);
 
     if (varietal && user) {
       return (

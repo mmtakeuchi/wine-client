@@ -6,17 +6,7 @@ const initialState = {
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_USERS":
-      return {
-        ...state,
-        user: action.user.user,
-        isLoggedIn: true,
-        users: action.users,
-        error: "",
-      };
-
     case "LOGIN_USER":
-      console.log(action.user);
       return {
         ...state,
         user: action.user,

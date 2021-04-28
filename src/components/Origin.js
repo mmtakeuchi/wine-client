@@ -18,8 +18,6 @@ export class Origin extends Component {
       (origin) => origin.id === parseInt(this.props.match.params.id)
     );
 
-    console.log(origin);
-
     if (origin && user) {
       return (
         <div>

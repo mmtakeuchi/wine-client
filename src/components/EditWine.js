@@ -75,15 +75,9 @@ const EditWine = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  // const { wines } = useSelector((state) => state.wines);
   const varietals = useSelector((state) => state.varietals);
   const origins = useSelector((state) => state.origins);
   const wineId = props.match.params.id;
-  // const errorMessages = useSelector((state) => state.wines.error);
-
-  // useEffect(() => {
-  //   dispatch(getWines());
-  // }, []);
 
   useEffect(() => {
     dispatch(getVarietals());
@@ -98,8 +92,6 @@ const EditWine = (props) => {
       ? props.wines.find((wine) => wine.id === parseInt(wineId))
       : null;
 
-  console.log(props);
-  console.log(drink);
   const [values, setValues] = useState({
     user_id: props.user.id,
     brand: drink.brand,
@@ -108,7 +100,6 @@ const EditWine = (props) => {
     origin_id: drink.origin_id,
     varietal_id: drink.varietal_id,
   });
-  console.log(values);
 
   const handleChange = (e) => {
     setValues({
